@@ -167,6 +167,46 @@
             card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         });
     });
+    /* ── STROMA INTERACTIVE WIDGET ────────── */
+    const widgetTabs = document.querySelectorAll(".widget-tab");
+    const stromaDisplay = document.getElementById("stromaDisplay");
+    
+    const ipercData = {
+        soldador: {
+            peligro: "Exposición a humos metálicos (óx. de hierro, manganeso) y radiación UV no ionizante.",
+            riesgo: "Inhalación de sustancias tóxicas / Neumoconiosis, conjuntivitis actínica y quemaduras oculares.",
+            control: "Campanas extractoras móviles de alto vacío, respirador 3M con filtro P100 y sensor IoT de radiación UV en EPP."
+        },
+        operario: {
+            peligro: "Manipulación manual de cargas pesadas y tránsito de equipos móviles (montacargas).",
+            riesgo: "Sobreesfuerzo físico / Lumbalgia aguda y atropello por maquinaria / Fracturas graves.",
+            control: "Fajas lumbares ergonómicas de control activo, delimitación de pasarelas peatonales mediante proyectores LED y telemetría de proximidad."
+        },
+        conductor: {
+            peligro: "Jornadas de conducción prolongadas y factores climáticos adversos en rutas (neblina, lluvia).",
+            riesgo: "Somnolencia y fatiga extrema / Colisión vehicular, despiste o volcadura con fatalidad.",
+            control: "Cámaras inteligentes de fatiga activa (DSM) con alertas en cabina, telemetría GPS y control automático de horas de descanso."
+        }
+    };
+
+    if (widgetTabs && stromaDisplay) {
+        widgetTabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                widgetTabs.forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+                
+                const puesto = tab.dataset.puesto;
+                const data = ipercData[puesto];
+                if (data) {
+                    stromaDisplay.innerHTML = `
+                        <div class="display-row"><span class="display-label">[Peligro]</span> <span class="display-val">${data.peligro}</span></div>
+                        <div class="display-row"><span class="display-label">[Riesgo]</span> <span class="display-val">${data.riesgo}</span></div>
+                        <div class="display-row"><span class="display-label">[Control Predictivo IA]</span> <span class="display-val display-val--hl">${data.control}</span></div>
+                    `;
+                }
+            });
+        });
+    }
 
     /* ── CANVAS PARTICLE SYSTEM ──────────────── */
     const canvas = document.getElementById("bg-canvas");

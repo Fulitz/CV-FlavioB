@@ -763,6 +763,103 @@ strong { font-weight: 600; }
 }
 
 /* ==========================================================================
+   STROMA WIDGET
+   ========================================================================== */
+.stroma-widget {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    position: relative;
+    z-index: 10;
+}
+.light .stroma-widget {
+    background: rgba(0, 0, 0, 0.015);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+.widget-title {
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-2);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.widget-title i {
+    color: var(--accent);
+}
+.widget-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.widget-tab {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    color: var(--text-3);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s var(--ease-out);
+}
+.light .widget-tab {
+    background: rgba(0, 0, 0, 0.02);
+}
+.widget-tab:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.widget-tab.active {
+    background: var(--primary-dim);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.widget-display {
+    background: rgba(10, 15, 30, 0.4);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.light .widget-display {
+    background: rgba(255, 255, 255, 0.8);
+}
+.display-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.display-label {
+    font-weight: 600;
+    color: var(--text-3);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.display-val {
+    color: var(--text-1);
+}
+.display-val--hl {
+    color: var(--accent);
+    font-weight: 500;
+}
+.light .display-val--hl {
+    color: var(--primary);
+}
+
+/* ==========================================================================
    @MEDIA PRINT — ATS FRIENDLY FORMAT
    ========================================================================== */
 @media print {
