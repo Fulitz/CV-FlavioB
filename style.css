@@ -327,10 +327,55 @@ strong { font-weight: 600; }
    ========================================================================== */
 .cv-section {
     margin-bottom: 70px;
-    opacity: 0; transform: translateY(28px);
-    transition: opacity .6s var(--ease-out), transform .6s var(--ease-out);
 }
-.cv-section.visible { opacity: 1; transform: translateY(0); }
+/* Base state of child elements that should stagger */
+.section-head, 
+.job-card,
+.edu-card, 
+.skill-group, 
+.cert-card, 
+.stat-card {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+/* Reveal elements when section is visible */
+.cv-section.visible .section-head,
+.cv-section.visible .job-card,
+.cv-section.visible .edu-card,
+.cv-section.visible .skill-group,
+.cv-section.visible .cert-card,
+.cv-section.visible .stat-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Staggering delays for children */
+.cv-section.visible .section-head { transition-delay: 0s; }
+
+/* Timeline job cards */
+.cv-section.visible .job-card:nth-child(1) { transition-delay: 0.08s; }
+.cv-section.visible .job-card:nth-child(2) { transition-delay: 0.20s; }
+.cv-section.visible .job-card:nth-child(3) { transition-delay: 0.32s; }
+.cv-section.visible .job-card:nth-child(4) { transition-delay: 0.44s; }
+
+/* Stats cards */
+.cv-section.visible .stat-card:nth-child(1) { transition-delay: 0.08s; }
+.cv-section.visible .stat-card:nth-child(2) { transition-delay: 0.16s; }
+.cv-section.visible .stat-card:nth-child(3) { transition-delay: 0.24s; }
+
+/* Skill groups */
+.cv-section.visible .skill-group:nth-child(1) { transition-delay: 0.08s; }
+.cv-section.visible .skill-group:nth-child(2) { transition-delay: 0.20s; }
+.cv-section.visible .skill-group:nth-child(3) { transition-delay: 0.32s; }
+.cv-section.visible .skill-group:nth-child(4) { transition-delay: 0.44s; }
+
+/* Certifications cards */
+.cv-section.visible .cert-card:nth-child(1) { transition-delay: 0.05s; }
+.cv-section.visible .cert-card:nth-child(2) { transition-delay: 0.11s; }
+.cv-section.visible .cert-card:nth-child(3) { transition-delay: 0.17s; }
+.cv-section.visible .cert-card:nth-child(4) { transition-delay: 0.23s; }
+.cv-section.visible .cert-card:nth-child(5) { transition-delay: 0.29s; }
+.cv-section.visible .cert-card:nth-child(6) { transition-delay: 0.35s; }
 
 .section-head {
     display: flex; align-items: center; gap: 12px;
@@ -756,6 +801,17 @@ strong { font-weight: 600; }
         box-decoration-break: clone !important;
         background: #fff !important;
         width: 100% !important;
+    }
+
+    .section-head, 
+    .job-card,
+    .edu-card, 
+    .skill-group, 
+    .cert-card, 
+    .stat-card {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
 
     h1, h2, h3, h4, h5, h6 {
