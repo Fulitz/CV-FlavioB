@@ -14,10 +14,53 @@
     }
     applyTheme(saved === "light");
 
-    themeBtn.addEventListener("click", () => {
+    themeBtn.addEventListener("click", (e) => {
         const goLight = !body.classList.contains("light");
-        localStorage.setItem("theme", goLight ? "light" : "dark");
-        applyTheme(goLight);
+
+        // Fallback for browsers that don't support View Transitions or if user prefers reduced motion
+        if (!document.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            localStorage.setItem("theme", goLight ? "light" : "dark");
+            applyTheme(goLight);
+            return;
+        }
+
+        // Get click coordinates (or fall back to button center if keyboard event)
+        const rect = themeBtn.getBoundingClientRect();
+        const x = e.clientX ?? (rect.left + rect.width / 2);
+        const y = e.clientY ?? (rect.top + rect.height / 2);
+
+        // Distance to furthest corner of screen
+        const endRadius = Math.hypot(
+            Math.max(x, window.innerWidth - x),
+            Math.max(y, window.innerHeight - y)
+        );
+
+        // Start transition
+        const transition = document.startViewTransition(() => {
+            localStorage.setItem("theme", goLight ? "light" : "dark");
+            applyTheme(goLight);
+        });
+
+        // Animate the clipPath
+        transition.ready.then(() => {
+            const clipPath = [
+                `circle(0px at ${x}px ${y}px)`,
+                `circle(${endRadius}px at ${x}px ${y}px)`
+            ];
+
+            document.documentElement.animate(
+                {
+                    clipPath: goLight ? clipPath : [...clipPath].reverse(),
+                },
+                {
+                    duration: 450,
+                    easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+                    pseudoElement: goLight
+                        ? "::view-transition-new(root)"
+                        : "::view-transition-old(root)"
+                }
+            );
+        });
     });
 
     /* ── PRINT PDF ─────────────────────────── */
