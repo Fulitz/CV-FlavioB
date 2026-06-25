@@ -488,44 +488,4 @@
     }, { threshold: 0.2 });
 
     if (statsSection) statsObserver.observe(statsSection);
-
-    /* ── SAVINGS SIMULATOR (ROI) ────────────── */
-    const simHours      = document.getElementById("sim-hours");
-    const simRate       = document.getElementById("sim-rate");
-    const valHours      = document.getElementById("val-hours");
-    const valRate       = document.getElementById("val-rate");
-    const outHours      = document.getElementById("out-hours");
-    const outMoney      = document.getElementById("out-money");
-    const valEfficiency = document.getElementById("val-efficiency");
-    const simBarFill    = document.querySelector(".sim-bar-fill");
-
-    function calculateSavings() {
-        if (!simHours || !simRate) return;
-
-        const hours = +simHours.value;
-        const rate  = +simRate.value;
-
-        // Formula: Weekly Hours * 52 weeks * 75% efficiency of Python automation
-        const savedH = Math.round(hours * 52 * 0.75);
-        const savedM = savedH * rate;
-
-        // Dynamic productivity efficiency rating depending on scale
-        const efficiency = Math.min(60 + Math.round(hours / 2.5), 92);
-
-        // Update view
-        if (valHours) valHours.textContent = hours;
-        if (valRate) valRate.textContent = rate;
-        if (outHours) outHours.textContent = savedH.toLocaleString() + " hrs";
-        if (outMoney) outMoney.textContent = "$" + savedM.toLocaleString() + " USD";
-        if (valEfficiency) valEfficiency.textContent = efficiency + "%";
-        if (simBarFill) simBarFill.style.width = efficiency + "%";
-    }
-
-    if (simHours && simRate) {
-        simHours.addEventListener("input", calculateSavings);
-        simRate.addEventListener("input", calculateSavings);
-        // Initial calculation
-        calculateSavings();
-    }
-
 })();
