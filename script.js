@@ -329,4 +329,207 @@
         animate();
     }
 
+    /* ── PORTFOLIO FILTERS ─────────────────── */
+    const filterBtns = document.querySelectorAll(".portfolio-filter-btn");
+    const portCards  = document.querySelectorAll(".portfolio-card");
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            filterBtns.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            const filterValue = btn.dataset.filter;
+
+            portCards.forEach(card => {
+                const categories = card.dataset.category.split(" ");
+                if (filterValue === "all" || categories.includes(filterValue)) {
+                    card.classList.remove("fade-out");
+                    card.classList.add("fade-in");
+                } else {
+                    card.classList.remove("fade-in");
+                    card.classList.add("fade-out");
+                }
+            });
+        });
+    });
+
+    /* ── PORTFOLIO DETAIL MODAL ────────────── */
+    const projectsData = {
+        stroma: {
+            title: "STROMA Suite &middot; Control Predictivo IA",
+            subtitle: "Tecnología & IA &middot; SSOMA &middot; Consultoría",
+            img: "stroma_dashboard.png",
+            problem: "Dificultad para anticipar actos inseguros, fatiga extrema o condiciones de riesgo en campo (minería y construcción) en tiempo real, lo que derivaba en incidentes graves.",
+            solution: "Plataforma de IoT y visión computacional que recolecta datos de cámaras inteligentes de fatiga (DSM), telemetría corporal en EPPs y genera reportes automáticos de control operacional predictivo y planes de acción preventivos.",
+            impact: "Simulación de reducción de incidentes graves en un 80%, control continuo de fatiga y cumplimiento automatizado de la Ley N° 29783.",
+            tech: ["Python", "Flask", "OpenCV", "TensorFlow", "IoT Telemetry", "Tailwind CSS", "Bootstrap", "Google Fonts"]
+        },
+        checklist: {
+            title: "Auditor SSOMA & Checklist Interactivo",
+            subtitle: "SSOMA & Consultoría &middot; Analítica & BI",
+            img: "", // Placeholder
+            placeholderClass: "portfolio-card-placeholder--ssoma",
+            placeholderIcon: "fa-solid fa-list-check",
+            problem: "Las inspecciones de seguridad en campo suelen ser en papel, lentas de consolidar, propensas a pérdida de información y con retrasos de semanas en la homologación de subcontratistas.",
+            solution: "Aplicación web ligera para auditoría interactiva de 23 estándares críticos de SST, que compila los hallazgos en caliente, asigna responsables, y genera un plan de acción inmediato descargable en PDF.",
+            impact: "Reducción del 30% en tiempos de homologación de proveedores y 100% de trazabilidad de inspecciones técnico-legales.",
+            tech: ["HTML5", "CSS Grid", "JS Vanilla", "jspdf", "Local Storage", "Font Awesome"]
+        },
+        nifi: {
+            title: "Pipeline de Ingesta Telecom IPT",
+            subtitle: "Tecnología & IA &middot; Analítica & BI",
+            img: "", // Placeholder
+            placeholderClass: "portfolio-card-placeholder--tech",
+            placeholderIcon: "fa-solid fa-circle-nodes",
+            problem: "Ingesta manual de miles de incidentes y alarmas de red diarias desde múltiples APIs del operador Atento/IPT, resultando en reportes fuera de tiempo y carga laboral excesiva.",
+            solution: "Pipeline automatizado en Apache NiFi que extrae datos de red en tiempo real, los almacena en Google Cloud Platform y ejecuta scripts Python para limpiar e integrar información directamente en bases de datos SQL.",
+            impact: "Ahorro de 40 horas semanales de carga operativa para la gerencia, eliminando el 100% de errores manuales de reportería.",
+            tech: ["Python", "Apache NiFi", "Google Cloud Platform", "Pandas", "SQL Server", "Cron Jobs"]
+        },
+        powerbi: {
+            title: "Dashboard Ejecutivo de Sostenibilidad",
+            subtitle: "Analítica & BI &middot; Cumplimiento Ambiental",
+            img: "sustainability_dashboard.png",
+            problem: "La dirección general carecía de visibilidad agregada sobre los indicadores clave de sostenibilidad, Uptime de infraestructura crítica y conformidad reglamentaria de residuos sólidos.",
+            solution: "Cuadro de mando estratégico desarrollado en Power BI Avanzado, integrado mediante SQL a las bases de datos de operaciones, registros SSOMA e indicadores corporativos.",
+            impact: "Uptime sostenido de 99.9%, monitoreo inmediato de KPIs ambientales de residuos y control activo de cero accidentes.",
+            tech: ["Power BI", "DAX", "MS SQL Server", "ETL Pipelines", "Data Analytics", "Power Query"]
+        }
+    };
+
+    const modal        = document.getElementById("portfolio-modal");
+    const modalImg     = document.getElementById("modal-img-container");
+    const modalTitle   = document.getElementById("modal-title");
+    const modalSub     = document.getElementById("modal-subtitle");
+    const modalProb    = document.getElementById("modal-problem");
+    const modalSol     = document.getElementById("modal-solution");
+    const modalImpact  = document.getElementById("modal-impact");
+    const modalTech    = document.getElementById("modal-tech");
+    const modalClose   = modal ? modal.querySelector(".modal-close") : null;
+    const modalBack    = modal ? modal.querySelector(".modal-backdrop") : null;
+
+    function openModal(projectKey) {
+        const data = projectsData[projectKey];
+        if (!data || !modal) return;
+
+        // Image or Placeholder
+        if (data.img) {
+            modalImg.innerHTML = `<img src="${data.img}" alt="${data.title}">`;
+        } else {
+            modalImg.innerHTML = `
+                <div class="portfolio-card-placeholder ${data.placeholderClass || ''}">
+                    <i class="${data.placeholderIcon || 'fa-solid fa-folder-open'}"></i>
+                </div>
+            `;
+        }
+
+        // Text content
+        modalTitle.innerHTML = data.title;
+        modalSub.textContent = data.subtitle;
+        modalProb.textContent = data.problem;
+        modalSol.textContent = data.solution;
+        modalImpact.textContent = data.impact;
+
+        // Tech tags
+        modalTech.innerHTML = "";
+        data.tech.forEach(tech => {
+            const span = document.createElement("span");
+            span.className = "tag tag--tech";
+            span.textContent = tech;
+            modalTech.appendChild(span);
+        });
+
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+        if (!modal) return;
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+    }
+
+    // Attach click events to portfolio buttons
+    document.querySelectorAll(".portfolio-card-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const projectKey = btn.dataset.project;
+            openModal(projectKey);
+        });
+    });
+
+    if (modalClose) modalClose.addEventListener("click", closeModal);
+    if (modalBack) modalBack.addEventListener("click", closeModal);
+
+    // Close on Escape key
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal && modal.classList.contains("active")) {
+            closeModal();
+        }
+    });
+
+    /* ── SVG CIRCLE PROGRESS ANIMATION ──────── */
+    const circles = document.querySelectorAll(".circle-progress");
+    const statsSection = document.getElementById("stats");
+
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            statsObserver.unobserve(e.target);
+
+            // Animate progress circles
+            circles.forEach(circle => {
+                const targetVal = +circle.dataset.value;
+                const radius = circle.r.baseVal.value;
+                const circumference = 2 * Math.PI * radius; // ~251.2
+                
+                // Animate dashoffset
+                const offset = circumference - (circumference * targetVal) / 100;
+                circle.style.strokeDashoffset = offset;
+            });
+        });
+    }, { threshold: 0.2 });
+
+    if (statsSection) statsObserver.observe(statsSection);
+
+    /* ── SAVINGS SIMULATOR (ROI) ────────────── */
+    const simHours      = document.getElementById("sim-hours");
+    const simRate       = document.getElementById("sim-rate");
+    const valHours      = document.getElementById("val-hours");
+    const valRate       = document.getElementById("val-rate");
+    const outHours      = document.getElementById("out-hours");
+    const outMoney      = document.getElementById("out-money");
+    const valEfficiency = document.getElementById("val-efficiency");
+    const simBarFill    = document.querySelector(".sim-bar-fill");
+
+    function calculateSavings() {
+        if (!simHours || !simRate) return;
+
+        const hours = +simHours.value;
+        const rate  = +simRate.value;
+
+        // Formula: Weekly Hours * 52 weeks * 75% efficiency of Python automation
+        const savedH = Math.round(hours * 52 * 0.75);
+        const savedM = savedH * rate;
+
+        // Dynamic productivity efficiency rating depending on scale
+        const efficiency = Math.min(60 + Math.round(hours / 2.5), 92);
+
+        // Update view
+        if (valHours) valHours.textContent = hours;
+        if (valRate) valRate.textContent = rate;
+        if (outHours) outHours.textContent = savedH.toLocaleString() + " hrs";
+        if (outMoney) outMoney.textContent = "$" + savedM.toLocaleString() + " USD";
+        if (valEfficiency) valEfficiency.textContent = efficiency + "%";
+        if (simBarFill) simBarFill.style.width = efficiency + "%";
+    }
+
+    if (simHours && simRate) {
+        simHours.addEventListener("input", calculateSavings);
+        simRate.addEventListener("input", calculateSavings);
+        // Initial calculation
+        calculateSavings();
+    }
+
 })();

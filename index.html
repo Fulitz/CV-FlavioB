@@ -31,6 +31,7 @@
         <a href="#profile"        class="nav-dot"        data-label="Perfil"          aria-label="Perfil"><span></span></a>
         <a href="#stats"          class="nav-dot"        data-label="Impacto"         aria-label="Impacto"><span></span></a>
         <a href="#experience"     class="nav-dot"        data-label="Experiencia"     aria-label="Experiencia"><span></span></a>
+        <a href="#portfolio"      class="nav-dot"        data-label="Portafolio"      aria-label="Portafolio"><span></span></a>
         <a href="#education"      class="nav-dot"        data-label="Educación"       aria-label="Educación"><span></span></a>
         <a href="#skills"         class="nav-dot"        data-label="Habilidades"     aria-label="Habilidades"><span></span></a>
         <a href="#certifications" class="nav-dot"        data-label="Certificaciones" aria-label="Certificaciones"><span></span></a>
@@ -127,9 +128,16 @@
                     <span class="stat-unit">hrs/sem</span>
                     <span class="stat-label">Ahorradas con automatización Python</span>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number" data-target="99">0</span>
-                    <span class="stat-unit">.9%</span>
+                <div class="stat-card stat-card--circle">
+                    <div class="stat-circle-wrapper">
+                        <svg class="stat-circle" viewBox="0 0 100 100">
+                            <circle class="circle-bg" cx="50" cy="50" r="40" />
+                            <circle class="circle-progress" cx="50" cy="50" r="40" data-value="99.9" />
+                        </svg>
+                        <div class="circle-text">
+                            <span class="stat-number" data-target="99">0</span><span class="stat-unit">.9%</span>
+                        </div>
+                    </div>
                     <span class="stat-label">Uptime de infraestructura gestionada</span>
                 </div>
                 <div class="stat-card">
@@ -137,20 +145,67 @@
                     <span class="stat-unit">+</span>
                     <span class="stat-label">Cuentas corporativas captadas</span>
                 </div>
+                <div class="stat-card stat-card--circle">
+                    <div class="stat-circle-wrapper">
+                        <svg class="stat-circle" viewBox="0 0 100 100">
+                            <circle class="circle-bg" cx="50" cy="50" r="40" />
+                            <circle class="circle-progress" cx="50" cy="50" r="40" data-value="30" />
+                        </svg>
+                        <div class="circle-text">
+                            <span class="stat-number" data-target="30">0</span><span class="stat-unit">%</span>
+                        </div>
+                    </div>
+                    <span class="stat-label">Reducción en tiempos de homologación</span>
+                </div>
                 <div class="stat-card">
                     <span class="stat-number" data-target="40">0</span>
                     <span class="stat-unit">%</span>
                     <span class="stat-label">Incremento en recompra de servicios</span>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-number" data-target="30">0</span>
-                    <span class="stat-unit">%</span>
-                    <span class="stat-label">Reducción en tiempos de homologación</span>
-                </div>
                 <div class="stat-card stat-card--special">
                     <i class="fa-solid fa-shield-halved stat-icon-big"></i>
                     <span class="stat-label-big">Cero Accidentes</span>
                     <span class="stat-label">Durante toda la gestión SSOMA</span>
+                </div>
+            </div>
+
+            <!-- SIMULATOR WIDGET -->
+            <div class="simulator-wrapper">
+                <h4 class="simulator-title"><i class="fa-solid fa-calculator"></i> Simulador de Ahorro y Retorno (ROI)</h4>
+                <p class="simulator-intro">Arrastra los controles para simular la reducción de tiempos e impacto económico al automatizar tareas operativas o de control ambiental en tu empresa.</p>
+                <div class="simulator-grid">
+                    <div class="simulator-inputs">
+                        <div class="sim-input-group">
+                            <div class="sim-label-row">
+                                <label for="sim-hours">Horas manuales semanales (equipo):</label>
+                                <span class="sim-label-val"><span id="val-hours">30</span> hrs</span>
+                            </div>
+                            <input type="range" id="sim-hours" min="5" max="80" value="30" class="sim-slider">
+                        </div>
+                        <div class="sim-input-group">
+                            <div class="sim-label-row">
+                                <label for="sim-rate">Costo promedio por hora-hombre:</label>
+                                <span class="sim-label-val"><span id="val-rate">25</span> USD</span>
+                            </div>
+                            <input type="range" id="sim-rate" min="10" max="100" value="25" class="sim-slider">
+                        </div>
+                    </div>
+                    <div class="simulator-outputs">
+                        <div class="sim-out-card">
+                            <span class="sim-out-label">Tiempo Ahorrado al Año</span>
+                            <span class="sim-out-val" id="out-hours">1,170 hrs</span>
+                        </div>
+                        <div class="sim-out-card sim-out-card--highlight">
+                            <span class="sim-out-label">Ahorro Económico Estimado</span>
+                            <span class="sim-out-val" id="out-money">$29,250 USD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="simulator-bar-wrapper">
+                    <div class="sim-bar-label">Eficiencia Operativa / Incremento en Productividad: <span id="val-efficiency">75%</span></div>
+                    <div class="sim-bar-track">
+                        <div class="sim-bar-fill" style="width: 75%;"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -264,6 +319,87 @@
                     </div>
                 </article>
 
+            </div>
+        </section>
+
+        <!-- PORTFOLIO -->
+        <section class="cv-section no-print" id="portfolio">
+            <div class="section-head">
+                <span class="section-icon"><i class="fa-solid fa-folder-open"></i></span>
+                <h3 class="section-title">Portafolio de Soluciones</h3>
+            </div>
+            
+            <div class="portfolio-filters">
+                <button class="portfolio-filter-btn active" data-filter="all">Todos</button>
+                <button class="portfolio-filter-btn" data-filter="tech">Tecnología &amp; IA</button>
+                <button class="portfolio-filter-btn" data-filter="ssoma">SSOMA &amp; Consultoría</button>
+                <button class="portfolio-filter-btn" data-filter="bi">Analítica &amp; BI</button>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- STROMA Dashboard -->
+                <div class="portfolio-card" data-category="tech ssoma">
+                    <div class="portfolio-card-img-wrapper">
+                        <img src="stroma_dashboard.png" alt="STROMA Suite Mockup">
+                        <div class="portfolio-card-overlay">
+                            <span class="portfolio-card-category">Tecnología &amp; IA</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h4 class="portfolio-card-title">STROMA Suite &middot; Control Predictivo IA</h4>
+                        <p class="portfolio-card-desc">Plataforma IoT de prevención de riesgos y detección de fatiga activa para seguridad ocupacional en minería e industria.</p>
+                        <button class="portfolio-card-btn" data-project="stroma">Ver Detalles <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Checklist SSOMA -->
+                <div class="portfolio-card" data-category="ssoma bi">
+                    <div class="portfolio-card-img-wrapper">
+                        <div class="portfolio-card-placeholder portfolio-card-placeholder--ssoma">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <span class="portfolio-card-category">SSOMA &amp; Consultoría</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h4 class="portfolio-card-title">Auditor SSOMA &amp; Checklist Interactivo</h4>
+                        <p class="portfolio-card-desc">Herramienta web automatizada para auditar 23 estándares críticos de SST, generando informes y planes de acción inmediatos en PDF.</p>
+                        <button class="portfolio-card-btn" data-project="checklist">Ver Detalles <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- NiFi Pipeline -->
+                <div class="portfolio-card" data-category="tech bi">
+                    <div class="portfolio-card-img-wrapper">
+                        <div class="portfolio-card-placeholder portfolio-card-placeholder--tech">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                        </div>
+                        <div class="portfolio-card-overlay">
+                            <span class="portfolio-card-category">Tecnología &amp; IA</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h4 class="portfolio-card-title">Pipeline de Ingesta Telecom IPT</h4>
+                        <p class="portfolio-card-desc">Motor automatizado en Python y Apache NiFi para extraer, limpiar e integrar incidentes de red crítica en Google Cloud Platform.</p>
+                        <button class="portfolio-card-btn" data-project="nifi">Ver Detalles <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Power BI Dashboard -->
+                <div class="portfolio-card" data-category="bi">
+                    <div class="portfolio-card-img-wrapper">
+                        <img src="sustainability_dashboard.png" alt="Executive Dashboard Mockup">
+                        <div class="portfolio-card-overlay">
+                            <span class="portfolio-card-category">Analítica &amp; BI</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h4 class="portfolio-card-title">Dashboard Ejecutivo de Sostenibilidad</h4>
+                        <p class="portfolio-card-desc">Cuadro de mando analítico en Power BI para control de incidentes, cumplimiento ambiental de residuos y uptime en tiempo real.</p>
+                        <button class="portfolio-card-btn" data-project="powerbi">Ver Detalles <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -407,6 +543,48 @@
     <footer class="no-print site-footer">
         <p>&copy; 2026 Flavio Esteban Bravo Oyola &nbsp;&middot;&nbsp; Lima, Perú</p>
     </footer>
+    </div>
+
+    <!-- PORTFOLIO DETAIL MODAL -->
+    <div id="portfolio-modal" class="no-print portfolio-modal" aria-hidden="true" role="dialog">
+        <div class="modal-backdrop"></div>
+        <div class="modal-container">
+            <button class="modal-close" aria-label="Cerrar modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-content-wrapper">
+                <div class="modal-header-img" id="modal-img-container">
+                    <!-- Image dynamic injection -->
+                </div>
+                <div class="modal-body-content">
+                    <h4 class="modal-title" id="modal-title">Título del Proyecto</h4>
+                    <h5 class="modal-subtitle" id="modal-subtitle">Subtítulo del Proyecto</h5>
+                    
+                    <div class="modal-grid">
+                        <div class="modal-desc-col">
+                            <div class="modal-section-block">
+                                <h6><i class="fa-solid fa-triangle-exclamation"></i> El Problema</h6>
+                                <p id="modal-problem">Descripción del problema...</p>
+                            </div>
+                            <div class="modal-section-block">
+                                <h6><i class="fa-solid fa-circle-check"></i> La Solución</h6>
+                                <p id="modal-solution">Descripción de la solución...</p>
+                            </div>
+                        </div>
+                        <div class="modal-meta-col">
+                            <div class="modal-section-block">
+                                <h6><i class="fa-solid fa-chart-simple"></i> Impacto Logrado</h6>
+                                <p id="modal-impact" class="modal-impact-text">Métricas de impacto...</p>
+                            </div>
+                            <div class="modal-section-block">
+                                <h6><i class="fa-solid fa-laptop-code"></i> Tecnologías Utilizadas</h6>
+                                <div class="modal-tech-tags" id="modal-tech">
+                                    <!-- Dynamic tags -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js?v=3.0"></script>
