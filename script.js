@@ -358,7 +358,7 @@
         stroma: {
             title: "STROMA Suite &middot; Control Predictivo IA",
             subtitle: "Tecnología & IA &middot; SSOMA &middot; Consultoría",
-            img: "stroma_dashboard.png",
+            img: "stroma_suite.png",
             problem: "Dificultad para anticipar actos inseguros, fatiga extrema o condiciones de riesgo en campo (minería y construcción) en tiempo real, lo que derivaba en incidentes graves.",
             solution: "Plataforma de IoT y visión computacional que recolecta datos de cámaras inteligentes de fatiga (DSM), telemetría corporal en EPPs y genera reportes automáticos de control operacional predictivo y planes de acción preventivos.",
             impact: "Simulación de reducción de incidentes graves en un 80%, control continuo de fatiga y cumplimiento automatizado de la Ley N° 29783.",
@@ -367,9 +367,7 @@
         checklist: {
             title: "Auditor SSOMA & Checklist Interactivo",
             subtitle: "SSOMA & Consultoría &middot; Analítica & BI",
-            img: "", // Placeholder
-            placeholderClass: "portfolio-card-placeholder--ssoma",
-            placeholderIcon: "fa-solid fa-list-check",
+            img: "stroma_landing.png",
             problem: "Las inspecciones de seguridad en campo suelen ser en papel, lentas de consolidar, propensas a pérdida de información y con retrasos de semanas en la homologación de subcontratistas.",
             solution: "Aplicación web ligera para auditoría interactiva de 23 estándares críticos de SST, que compila los hallazgos en caliente, asigna responsables, y genera un plan de acción inmediato descargable en PDF.",
             impact: "Reducción del 30% en tiempos de homologación de proveedores y 100% de trazabilidad de inspecciones técnico-legales.",
@@ -378,9 +376,7 @@
         nifi: {
             title: "Pipeline de Ingesta Telecom IPT",
             subtitle: "Tecnología & IA &middot; Analítica & BI",
-            img: "", // Placeholder
-            placeholderClass: "portfolio-card-placeholder--tech",
-            placeholderIcon: "fa-solid fa-circle-nodes",
+            img: "inoc_suite.png",
             problem: "Ingesta manual de miles de incidentes y alarmas de red diarias desde múltiples APIs del operador Atento/IPT, resultando en reportes fuera de tiempo y carga laboral excesiva.",
             solution: "Pipeline automatizado en Apache NiFi que extrae datos de red en tiempo real, los almacena en Google Cloud Platform y ejecuta scripts Python para limpiar e integrar información directamente en bases de datos SQL.",
             impact: "Ahorro de 40 horas semanales de carga operativa para la gerencia, eliminando el 100% de errores manuales de reportería.",
