@@ -101,7 +101,7 @@
         });
     });
 
-    /* ── 3D TILT EFFECT ────────────────────── */
+    /* ── 3D TILT EFFECT & GLOW COORDINATES ── */
     const tiltCards = document.querySelectorAll(".job-body, .edu-card, .skill-group, .cert-card, .stat-card");
     tiltCards.forEach(card => {
         card.addEventListener("mousemove", e => {
@@ -110,10 +110,14 @@
             const y = e.clientY - rect.top;
             const xc = rect.width / 2;
             const yc = rect.height / 2;
-            const angleX = (yc - y) / 10; // Max angle X: ~10deg
-            const angleY = (x - xc) / 10; // Max angle Y: ~10deg
+            const angleX = (yc - y) / 35; // Max angle X: ~3deg (much more subtle)
+            const angleY = (x - xc) / 35; // Max angle Y: ~3deg (much more subtle)
             
-            card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.02, 1.02, 1.02)`;
+            card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.008, 1.008, 1.008)`;
+            
+            // Set coordinates for CSS radial glow
+            card.style.setProperty("--mouse-x", `${x}px`);
+            card.style.setProperty("--mouse-y", `${y}px`);
         });
         
         card.addEventListener("mouseleave", () => {

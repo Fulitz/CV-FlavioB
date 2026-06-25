@@ -21,6 +21,7 @@
     --green-dim:   hsla(158, 65%, 48%, 0.12);
     --amber:       hsl(38,  90%, 56%);
     --amber-dim:   hsla(38,  90%, 56%, 0.12);
+    --glow-color:  hsla(215, 80%, 55%, 0.10);
 
     --radius-sm: 8px;
     --radius-md: 14px;
@@ -49,6 +50,7 @@
     --accent-dim:  hsla(185, 70%, 36%, 0.10);
     --green:       hsl(158, 60%, 36%);
     --green-dim:   hsla(158, 60%, 36%, 0.10);
+    --glow-color:  hsla(215, 70%, 48%, 0.06);
 }
 
 /* ==========================================================================
@@ -670,6 +672,28 @@ strong { font-weight: 600; }
     .cert-grid { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .edu-card { flex-direction: column; }
+}
+
+/* ==========================================================================
+   RADIAL GLOW EFFECT
+   ========================================================================== */
+.job-body, .edu-card, .skill-group, .cert-card, .stat-card {
+    position: relative;
+    overflow: hidden;
+}
+.job-body::after, .edu-card::after, .skill-group::after, .cert-card::after, .stat-card::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    background: radial-gradient(350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--glow-color), transparent 80%);
+    transition: opacity 0.3s ease;
+}
+.job-body:hover::after, .edu-card:hover::after, .skill-group:hover::after, .cert-card:hover::after, .stat-card:hover::after {
+    opacity: 1;
 }
 
 /* ==========================================================================
