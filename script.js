@@ -1,6 +1,41 @@
-/* script.js — Theme toggle, typed animation, scroll spy, stat counter */
+/* script.js — Theme toggle, typed animation, scroll spy, stat counter, security features */
 (function () {
     "use strict";
+
+    /* ── SECURITY: DISABLE RIGHT-CLICK ON IMAGES ── */
+    document.addEventListener('contextmenu', function(e) {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    /* ── SECURITY: DISABLE DRAGGING IMAGES ── */
+    document.addEventListener('dragstart', function(e) {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    /* ── SECURITY: DYNAMIC WATERMARK ON CANVAS ── */
+    const canvas = document.getElementById('bg-canvas');
+    let watermarkInterval = null;
+    
+    function addWatermark() {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        
+        // Add subtle watermark text
+        ctx.save();
+        ctx.globalAlpha = 0.03;
+        ctx.fillStyle = getComputedStyle(document.body).classList.contains('light') ? '#000' : '#fff';
+        ctx.font = '14px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('© Flavio Bravo Oyola - Todos los derechos reservados', canvas.width / 2, canvas.height - 20);
+        ctx.restore();
+    }
 
     /* ── THEME ─────────────────────────────── */
     const body        = document.body;
@@ -323,6 +358,9 @@
             }
 
             requestAnimationFrame(animate);
+            
+            // Add watermark after each frame
+            addWatermark();
         }
 
         resizeCanvas();
@@ -488,4 +526,33 @@
     }, { threshold: 0.2 });
 
     if (statsSection) statsObserver.observe(statsSection);
+
+    /* ── SECURITY: EMAIL PROTECTION ─────────── */
+    // Reconstruct email addresses on click to prevent scraping
+    document.querySelectorAll('.email-text').forEach(el => {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            const user = this.dataset.user;
+            const domain = this.dataset.domain;
+            window.location.href = `mailto:${user}@${domain}`;
+        });
+    });
+
+    /* ── PERFORMANCE: LAZY LOADING FALLBACK ─── */
+    // For browsers that don't support native lazy loading
+    if ('loading' in HTMLImageElement.prototype === false) {
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src || img.src;
+                    img.classList.add('loaded');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+        images.forEach(img => imageObserver.observe(img));
+    }
+
 })();
