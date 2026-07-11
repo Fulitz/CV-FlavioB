@@ -8,8 +8,39 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=3.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="style.css?v=4.0">
+    
+    <!-- SEO & Social Sharing -->
+    <meta name="author" content="Flavio Esteban Bravo Oyola">
+    <meta name="keywords" content="Ingeniero Ambiental, SSOMA, Power BI, Python, ISO 14001, ISO 45001, Ley 29783, STROMA, Consultoría Ambiental, Seguridad Industrial, Lima, Perú">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0ea5e9">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fulitz.github.io/CV-FlavioB/">
+    <meta property="og:title" content="Flavio Bravo Oyola · Ingeniero Ambiental & Analista de Datos">
+    <meta property="og:description" content="Portafolio profesional y CV interactivo de Flavio Esteban Bravo Oyola — Especialista en SSOMA, automatización con Python y Power BI.">
+    <meta property="og:image" content="assets/images/projects/stroma_landing.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://fulitz.github.io/CV-FlavioB/">
+    <meta property="twitter:title" content="Flavio Bravo Oyola · Ingeniero Ambiental & Analista de Datos">
+    <meta property="twitter:description" content="Portafolio profesional y CV interactivo de Flavio Esteban Bravo Oyola — Especialista en SSOMA, automatización con Python y Power BI.">
+    <meta property="twitter:image" content="assets/images/projects/stroma_landing.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://fulitz.github.io/CV-FlavioB/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/profile/foto.jpg">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="assets/images/profile/foto.jpg" as="image">
+    <link rel="preload" href="style.css" as="style">
+    <link rel="preload" href="script.js" as="script">
 </head>
 <body>
     <canvas id="bg-canvas" class="no-print" aria-hidden="true"></canvas>
@@ -48,7 +79,7 @@
         <div class="hero-content">
             <div class="avatar-ring">
                 <div class="avatar-inner">
-                    <img src="foto.jpg" alt="Foto de Flavio Esteban Bravo Oyola">
+                    <img src="assets/images/profile/foto.jpg" alt="Foto de Flavio Esteban Bravo Oyola" loading="lazy">
                 </div>
                 <svg class="avatar-spinner no-print" viewBox="0 0 100 100" aria-hidden="true">
                     <circle cx="50" cy="50" r="46" fill="none" stroke-width="2"/>
@@ -76,15 +107,15 @@
                         <i class="fa-solid fa-phone no-print"></i>
                         <span class="print-label">Tel: </span>+51 924 585 930
                     </a>
-                    <a href="mailto:vobrafla@gmail.com" class="contact-chip">
+                    <a href="#" class="contact-chip" data-email="vobrafla@gmail.com" onclick="window.location.href='mailto:' + this.dataset.email; return false;">
                         <i class="fa-solid fa-envelope no-print"></i>
-                        <span class="print-label">Email: </span>vobrafla@gmail.com
+                        <span class="print-label">Email: </span><span class="email-text" data-user="vobrafla" data-domain="gmail.com">vobrafla[at]gmail[dot]com</span>
                     </a>
-                    <a href="https://linkedin.com/in/flavio-bravo-o090300" target="_blank" rel="noopener" class="contact-chip">
+                    <a href="https://linkedin.com/in/flavio-bravo-o090300" target="_blank" rel="noopener noreferrer" class="contact-chip">
                         <i class="fa-brands fa-linkedin no-print"></i>
                         <span class="print-label">LinkedIn: </span>linkedin.com/in/flavio-bravo-o090300
                     </a>
-                    <a href="https://fulitz.github.io/CV-FlavioB/" target="_blank" rel="noopener" class="contact-chip contact-chip--highlight">
+                    <a href="https://fulitz.github.io/CV-FlavioB/" target="_blank" rel="noopener noreferrer" class="contact-chip contact-chip--highlight">
                         <i class="fa-solid fa-globe no-print"></i>
                         <span class="print-label">Portafolio Web / CV Interactivo: </span>fulitz.github.io/CV-FlavioB
                     </a>
@@ -300,7 +331,7 @@
                 <!-- STROMA Dashboard -->
                 <div class="portfolio-card" data-category="tech ssoma">
                     <div class="portfolio-card-img-wrapper">
-                        <img src="stroma_suite.png" alt="STROMA Suite SSOMA Dashboard">
+                        <img src="assets/images/projects/stroma_suite.png" alt="STROMA Suite SSOMA Dashboard" loading="lazy">
                         <div class="portfolio-card-overlay">
                             <span class="portfolio-card-category">Tecnología &amp; IA</span>
                         </div>
@@ -315,7 +346,7 @@
                 <!-- Checklist SSOMA -->
                 <div class="portfolio-card" data-category="ssoma bi">
                     <div class="portfolio-card-img-wrapper">
-                        <img src="stroma_landing.png" alt="STROMA Landing Page">
+                        <img src="assets/images/projects/stroma_landing.png" alt="STROMA Landing Page" loading="lazy">
                         <div class="portfolio-card-overlay">
                             <span class="portfolio-card-category">SSOMA &amp; Consultoría</span>
                         </div>
@@ -330,7 +361,7 @@
                 <!-- NiFi Pipeline -->
                 <div class="portfolio-card" data-category="tech bi">
                     <div class="portfolio-card-img-wrapper">
-                        <img src="inoc_suite.png" alt="INOC Suite ShiftGuard">
+                        <img src="assets/images/projects/inoc_suite.png" alt="INOC Suite ShiftGuard" loading="lazy">
                         <div class="portfolio-card-overlay">
                             <span class="portfolio-card-category">Tecnología &amp; IA</span>
                         </div>
@@ -345,7 +376,7 @@
                 <!-- Power BI Dashboard -->
                 <div class="portfolio-card" data-category="bi">
                     <div class="portfolio-card-img-wrapper">
-                        <img src="sustainability_dashboard.png" alt="Executive Dashboard Mockup">
+                        <img src="assets/images/projects/sustainability_dashboard.png" alt="Executive Dashboard Mockup" loading="lazy">
                         <div class="portfolio-card-overlay">
                             <span class="portfolio-card-category">Analítica &amp; BI</span>
                         </div>

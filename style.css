@@ -1350,6 +1350,14 @@ strong { font-weight: 600; }
 
     .no-print { display: none !important; }
     .print-label { display: inline !important; font-weight: bold; }
+    
+    /* Show full email in print */
+    .email-text::after {
+        content: attr(data-user) "@" attr(data-domain) !important;
+    }
+    .email-text {
+        visibility: hidden !important;
+    }
 
     /* ── Hero becomes clean header ── */
     .hero-section {
