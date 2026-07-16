@@ -3,546 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portafolio profesional y CV interactivo de Flavio Esteban Bravo Oyola — Ingeniero Ambiental, Analista de Datos y Especialista en SSOMA con sede en Lima, Perú.">
-    <title>Flavio Bravo Oyola · Ingeniero Ambiental &amp; Analista de Datos</title>
+    <meta name="description" content="CV y portafolio profesional de Flavio Bravo Oyola: gestión ambiental, SSOMA, operaciones, automatización y analítica de datos.">
+    <meta name="theme-color" content="#f2eee5">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Flavio Bravo Oyola · Gestión, operaciones y datos">
+    <meta property="og:description" content="Cumplimiento riguroso, procesos trazables y decisiones respaldadas por datos.">
+    <meta property="og:image" content="foto.jpg">
+    <link rel="canonical" href="https://fulitz.github.io/CV-FlavioB/">
+    <title>Flavio Bravo Oyola · Perfil Profesional</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=3.0">
+    <link rel="stylesheet" href="style.css?v=5.1">
 </head>
 <body>
-    <canvas id="bg-canvas" class="no-print" aria-hidden="true"></canvas>
+    <a class="skip-link" href="#profile">Saltar al contenido principal</a>
+    <div class="scroll-progress no-print" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
 
-    <!-- FLOATING CONTROLS -->
-    <div class="no-print floating-controls">
-        <button id="theme-toggle" class="fab fab--icon" aria-label="Cambiar tema">
-            <i class="fa-solid fa-sun" id="theme-icon"></i>
-        </button>
-        <button id="print-pdf" class="fab fab--primary" aria-label="Exportar el CV en PDF aquí">
-            <i class="fa-solid fa-file-pdf"></i>
-            <span>Exportar el CV en PDF aquí</span>
-        </button>
-    </div>
+    <header class="site-header no-print" id="site-header">
+        <nav class="nav-shell" aria-label="Navegación principal">
+            <a class="brand" href="#hero" aria-label="Ir al inicio">
+                <span class="brand-mark">FB</span>
+                <span class="brand-copy"><strong>Flavio Bravo</strong><small>Perfil profesional</small></span>
+            </a>
 
-    <!-- SIDE NAV -->
-    <nav class="no-print side-nav" aria-label="Navegación del CV">
-        <a href="#hero"           class="nav-dot active" data-label="Inicio"         aria-label="Inicio"><span></span></a>
-        <a href="#profile"        class="nav-dot"        data-label="Perfil"          aria-label="Perfil"><span></span></a>
-        <a href="#stats"          class="nav-dot"        data-label="Impacto"         aria-label="Impacto"><span></span></a>
-        <a href="#experience"     class="nav-dot"        data-label="Experiencia"     aria-label="Experiencia"><span></span></a>
-        <a href="#portfolio"      class="nav-dot"        data-label="Portafolio"      aria-label="Portafolio"><span></span></a>
-        <a href="#education"      class="nav-dot"        data-label="Educación"       aria-label="Educación"><span></span></a>
-        <a href="#skills"         class="nav-dot"        data-label="Habilidades"     aria-label="Habilidades"><span></span></a>
-        <a href="#certifications" class="nav-dot"        data-label="Certificaciones" aria-label="Certificaciones"><span></span></a>
-    </nav>
-
-    <!-- HERO -->
-    <div class="print-wrapper">
-    <section id="hero" class="hero-section">
-        <div class="hero-bg-orbs no-print" aria-hidden="true">
-            <div class="orb orb-1"></div>
-            <div class="orb orb-2"></div>
-            <div class="orb orb-3"></div>
-        </div>
-        <div class="hero-content">
-            <div class="avatar-ring">
-                <div class="avatar-inner">
-                    <img src="foto.jpg" alt="Foto de Flavio Esteban Bravo Oyola">
-                </div>
-                <svg class="avatar-spinner no-print" viewBox="0 0 100 100" aria-hidden="true">
-                    <circle cx="50" cy="50" r="46" fill="none" stroke-width="2"/>
-                </svg>
+            <div class="nav-links" id="nav-links">
+                <a href="#profile">Perfil</a>
+                <a href="#experience">Experiencia</a>
+                <a href="#projects">Proyectos</a>
+                <a href="#credentials">Formación</a>
+                <a href="#contact">Contacto</a>
             </div>
-            <div class="hero-text">
-                <div class="hero-badge no-print">
-                    <span class="pulse-dot"></span> Disponible para nuevas oportunidades
+
+            <div class="nav-actions">
+                <span class="local-time" id="local-time" aria-label="Hora local en Lima">Lima · --:--</span>
+                <button class="icon-button" id="theme-toggle" type="button" aria-label="Cambiar a tema oscuro" title="Cambiar tema">
+                    <i class="fa-solid fa-moon" id="theme-icon" aria-hidden="true"></i>
+                </button>
+                <a class="nav-cta magnetic" href="mailto:vobrafla@gmail.com">Hablemos <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                <button class="menu-button" id="menu-toggle" type="button" aria-controls="nav-links" aria-expanded="false" aria-label="Abrir menú">
+                    <span></span><span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="hero">
+            <div class="hero-grid page-shell">
+                <div class="hero-copy" data-reveal>
+                    <p class="eyebrow"><span></span> Bachiller en Ingeniería y Gestión Ambiental · Lima</p>
+                    <p class="hero-name">Flavio Esteban Bravo Oyola</p>
+                    <h1>Rigor en la gestión.<br><em>Claridad para decidir.</em></h1>
+                    <p class="hero-summary">Integro SSOMA, gestión ambiental, operaciones y analítica para transformar obligaciones complejas en procesos trazables, controles útiles y resultados medibles.</p>
+
+                    <div class="hero-actions no-print">
+                        <a class="button button--ink magnetic" href="#experience">Explorar trayectoria <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+                        <button class="button button--text" id="print-pdf" type="button"><i class="fa-regular fa-file-pdf" aria-hidden="true"></i> Guardar CV en PDF</button>
+                    </div>
+
+                    <div class="hero-meta">
+                        <div><span>Enfoque</span><strong>SSOMA · Datos · Operaciones</strong></div>
+                        <div><span>Disponibilidad</span><strong class="available"><i></i> Abierto a oportunidades</strong></div>
+                    </div>
+                    <p class="print-contact">Chorrillos, Lima, Perú · +51 924 585 930 · vobrafla@gmail.com · linkedin.com/in/flavio-bravo-o090300 · fulitz.github.io/CV-FlavioB</p>
                 </div>
-                <h1 class="hero-name">
-                    <span class="name-first">Flavio Esteban</span>
-                    <span class="name-last">Bravo Oyola</span>
-                </h1>
-                <h2 class="hero-title">
-                    <span class="typed-static">Ingeniero Ambiental</span>
-                    <span class="typed-separator no-print"> &middot; </span>
-                    <span class="typed-text no-print" id="typed-role"></span>
-                </h2>
-                <div class="contact-bar">
-                    <span class="contact-chip">
-                        <i class="fa-solid fa-location-dot no-print"></i>
-                        <span class="print-label">Ubicación: </span>Chorrillos, Lima, Perú
-                    </span>
-                    <a href="tel:+51924585930" class="contact-chip">
-                        <i class="fa-solid fa-phone no-print"></i>
-                        <span class="print-label">Tel: </span>+51 924 585 930
-                    </a>
-                    <a href="mailto:vobrafla@gmail.com" class="contact-chip">
-                        <i class="fa-solid fa-envelope no-print"></i>
-                        <span class="print-label">Email: </span>vobrafla@gmail.com
-                    </a>
-                    <a href="https://linkedin.com/in/flavio-bravo-o090300" target="_blank" rel="noopener" class="contact-chip">
-                        <i class="fa-brands fa-linkedin no-print"></i>
-                        <span class="print-label">LinkedIn: </span>linkedin.com/in/flavio-bravo-o090300
-                    </a>
-                    <a href="https://fulitz.github.io/CV-FlavioB/" target="_blank" rel="noopener" class="contact-chip contact-chip--highlight">
-                        <i class="fa-solid fa-globe no-print"></i>
-                        <span class="print-label">Portafolio Web / CV Interactivo: </span>fulitz.github.io/CV-FlavioB
-                    </a>
+
+                <div class="hero-visual" data-reveal data-delay="120">
+                    <div class="portrait-stage" data-parallax="0.035">
+                        <div class="portrait-outline" aria-hidden="true"></div>
+                        <figure class="portrait-frame tilt-surface" data-tilt data-tilt-strength="5">
+                            <picture><source srcset="foto.webp" type="image/webp"><img src="foto.jpg" alt="Retrato profesional de Flavio Bravo Oyola" width="900" height="900"></picture>
+                            <figcaption>Ingeniería · Gestión · Innovación aplicada</figcaption>
+                        </figure>
+                        <div class="floating-note floating-note--top" data-parallax="0.075">
+                            <span>Automatización</span><strong>40 h/sem</strong><small>de carga operativa reducida</small>
+                        </div>
+                        <div class="floating-note floating-note--bottom" data-parallax="-0.055">
+                            <span>Continuidad</span><strong>99.9%</strong><small>de disponibilidad reportada</small>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="scroll-hint no-print" aria-hidden="true">
-            <span>Desliza</span>
-            <i class="fa-solid fa-chevron-down"></i>
-        </div>
-    </section>
 
-    <!-- MAIN CONTENT -->
-    <main class="cv-main">
-
-        <!-- PERFIL -->
-        <section class="cv-section" id="profile">
-            <div class="section-head">
-                <span class="section-icon no-print"><i class="fa-solid fa-user-tie"></i></span>
-                <h3 class="section-title">Perfil Profesional</h3>
-            </div>
-            <div class="section-body">
-                <p class="profile-text">
-                    Bachiller en <strong>Ingeniería y Gestión Ambiental</strong> por la Universidad Peruana de Ciencias Aplicadas (UPC) y <strong>Fundador de STROMA</strong>, con un perfil híbrido que integra la <strong>gestión ambiental y SSOMA</strong> con la <strong>automatización de procesos y analítica de datos</strong>. Cuento con experiencia en el acompañamiento e implementación de Sistemas Integrados de Gestión (ISO 9001, ISO 14001, ISO 45001) y en el diseño de tableros de control en Power BI para el monitoreo en tiempo real de KPIs de sostenibilidad y seguridad en el trabajo (SST) bajo la Ley N° 29783.
-                </p>
-                <p class="profile-text">
-                    Destaco por integrar el cumplimiento normativo técnico-legal con la optimización operativa mediante programación en Python y SQL, y por mis habilidades en negociación técnico-comercial, estructuración de propuestas corporativas, liderazgo en inspecciones de seguridad en campo y relacionamiento ante entidades reguladoras (OEFA, OSINERGMIN) y municipales.
-                </p>
+            <div class="hero-index no-print" aria-hidden="true">
+                <span>CV / 2026</span><span class="hero-index-line"></span><span>Desplaza para explorar</span>
             </div>
         </section>
 
-        <!-- STATS -->
-        <section class="cv-section no-print" id="stats">
-            <div class="section-head">
-                <span class="section-icon"><i class="fa-solid fa-chart-line"></i></span>
-                <h3 class="section-title">Impacto en Números</h3>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="stat-number" data-target="40">0</span>
-                    <span class="stat-unit">hrs/sem</span>
-                    <span class="stat-label">Ahorradas con automatización Python</span>
-                </div>
-                <div class="stat-card stat-card--circle">
-                    <div class="stat-circle-wrapper">
-                        <svg class="stat-circle" viewBox="0 0 100 100">
-                            <circle class="circle-bg" cx="50" cy="50" r="40" />
-                            <circle class="circle-progress" cx="50" cy="50" r="40" data-value="99.9" />
-                        </svg>
-                        <div class="circle-text">
-                            <span class="stat-number" data-target="99">0</span><span class="stat-unit">.9%</span>
-                        </div>
-                    </div>
-                    <span class="stat-label">Uptime de infraestructura gestionada</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" data-target="15">0</span>
-                    <span class="stat-unit">+</span>
-                    <span class="stat-label">Cuentas corporativas captadas</span>
-                </div>
-                <div class="stat-card stat-card--circle">
-                    <div class="stat-circle-wrapper">
-                        <svg class="stat-circle" viewBox="0 0 100 100">
-                            <circle class="circle-bg" cx="50" cy="50" r="40" />
-                            <circle class="circle-progress" cx="50" cy="50" r="40" data-value="30" />
-                        </svg>
-                        <div class="circle-text">
-                            <span class="stat-number" data-target="30">0</span><span class="stat-unit">%</span>
-                        </div>
-                    </div>
-                    <span class="stat-label">Reducción en tiempos de homologación</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number" data-target="40">0</span>
-                    <span class="stat-unit">%</span>
-                    <span class="stat-label">Incremento en recompra de servicios</span>
-                </div>
-                <div class="stat-card stat-card--special">
-                    <i class="fa-solid fa-shield-halved stat-icon-big"></i>
-                    <span class="stat-label-big">Cero Accidentes</span>
-                    <span class="stat-label">Durante toda la gestión SSOMA</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- EXPERIENCIA -->
-        <section class="cv-section" id="experience">
-            <div class="section-head">
-                <span class="section-icon no-print"><i class="fa-solid fa-briefcase"></i></span>
-                <h3 class="section-title">Experiencia Profesional</h3>
-            </div>
-            <div class="section-body timeline">
-
-                <article class="job-card">
-                    <div class="job-marker no-print"></div>
-                    <div class="job-body">
-                        <div class="job-top">
-                            <div>
-                                <h4 class="job-company">STROMA &middot; Soluciones Tecnológicas y Consultoría SSOMA</h4>
-                                <h5 class="job-role">Fundador y Desarrollador Principal</h5>
-                            </div>
-                            <span class="job-date"><i class="fa-regular fa-calendar no-print"></i> Ene. 2026 &ndash; Presente</span>
-                        </div>
-                        <ul class="job-achievements">
-                            <li><span class="ach-label">Emprendimiento y Tecnología:</span> Concebí, fundé y desarrollé de forma independiente <strong>STROMA</strong>, una solución digital y consultoría especializada en automatizar el cumplimiento ambiental y la seguridad y salud en el trabajo (SST). Diseñé y programé toda la plataforma desde cero mediante <strong>vibe coding</strong>.</li>
-                            <li><span class="ach-label">Desarrollo de Soluciones:</span> Diseñé e implementé una <strong>herramienta automatizada de auditoría y diagnóstico de cumplimiento regulatorio</strong> (Checklist SSOMA) que analiza de forma interactiva 23 requisitos críticos y genera planes de acción inmediatos para mitigar riesgos ante OEFA, OSINERGMIN y municipalidades.</li>
-                            <li><span class="ach-label">Automatización y BI:</span> Desarrollé tableros e interfaces de control en tiempo real para supervisar indicadores clave de conformidad legal, vigencia de SCTR, capacitación del personal y gestión de residuos sólidos.</li>
-                            <li><span class="ach-label">Consultoría Técnica:</span> Brindo asesoramiento especializado en la elaboración, control de documentación obligatoria y homologación de proveedores bajo la Ley N° 29783.</li>
-                        </ul>
-                        <div class="job-tags no-print">
-                            <span class="tag tag--biz">Emprendimiento</span><span class="tag tag--env">Consultoría SSOMA</span><span class="tag tag--env">Ley 29783</span><span class="tag tag--tech">Python</span><span class="tag tag--tech">Power BI</span><span class="tag tag--env">Auditoría Ambiental</span><span class="tag tag--biz">Gestión de Proyectos</span>
-                        </div>
-
-                        <!-- STROMA INTERACTIVE WIDGET -->
-                        <div class="stroma-widget no-print">
-                            <h6 class="widget-title"><i class="fa-solid fa-microchip"></i> STROMA Suite &middot; Simulador de Control Predictivo IA</h6>
-                            <div class="widget-tabs">
-                                <button class="widget-tab active" data-puesto="soldador">Soldador</button>
-                                <button class="widget-tab" data-puesto="operario">Operario</button>
-                                <button class="widget-tab" data-puesto="conductor">Conductor</button>
-                            </div>
-                            <div class="widget-display" id="stromaDisplay">
-                                <div class="display-row"><span class="display-label">[Peligro]</span> <span class="display-val">Exposición a humos metálicos (óx. de hierro, manganeso) y radiación UV no ionizante.</span></div>
-                                <div class="display-row"><span class="display-label">[Riesgo]</span> <span class="display-val">Inhalación de sustancias tóxicas / Neumoconiosis, conjuntivitis actínica y quemaduras oculares.</span></div>
-                                <div class="display-row"><span class="display-label">[Control Predictivo IA]</span> <span class="display-val display-val--hl">Campanas extractoras móviles de alto vacío, respirador 3M con filtro P100 y sensor IoT de radiación UV en EPP.</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="job-card">
-                    <div class="job-marker no-print"></div>
-                    <div class="job-body">
-                        <div class="job-top">
-                            <div>
-                                <h4 class="job-company">Internet Para Todos (IPT) &middot; Atento</h4>
-                                <h5 class="job-role">Analista de Datos y Operaciones de Infraestructura <em>(Ingeniero INOC)</em></h5>
-                            </div>
-                            <span class="job-date"><i class="fa-regular fa-calendar no-print"></i> Mar. 2023 &ndash; Presente</span>
-                        </div>
-                        <ul class="job-achievements">
-                            <li><span class="ach-label">Automatización:</span> Programé scripts en Python para automatizar el <strong>100% de la reportería operativa</strong> de control de infraestructura de telecomunicaciones, eliminando errores manuales y reduciendo <strong>40 horas semanales</strong> de carga operativa de la gerencia.</li>
-                            <li><span class="ach-label">Business Intelligence:</span> Diseñé tableros de control en <strong>Power BI</strong> en tiempo real para el monitoreo de incidencias críticas, habilitando la toma de decisiones operativas basada en datos y el seguimiento de matrices de control operacional.</li>
-                            <li><span class="ach-label">Continuidad Operativa:</span> Supervisé infraestructura crítica de red bajo estrictos acuerdos de nivel de servicio (SLA), logrando y sosteniendo un <strong>Uptime del 99.9%</strong> mediante respuesta ágil y proactiva ante incidentes.</li>
-                        </ul>
-                        <div class="job-tags no-print">
-                            <span class="tag tag--tech">Python</span><span class="tag tag--tech">Power BI</span><span class="tag tag--tech">SQL</span><span class="tag tag--tech">Apache NiFi</span><span class="tag tag--tech">GCP</span><span class="tag tag--biz">Telecomunicaciones</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="job-card">
-                    <div class="job-marker no-print"></div>
-                    <div class="job-body">
-                        <div class="job-top">
-                            <div>
-                                <h4 class="job-company">Solugrifos S.A.C.</h4>
-                                <h5 class="job-role">Gestor Comercial y Soporte Técnico SIG / SST</h5>
-                            </div>
-                            <span class="job-date"><i class="fa-regular fa-calendar no-print"></i> Abr. 2024 &ndash; Dic. 2025</span>
-                        </div>
-                        <ul class="job-achievements">
-                            <li><span class="ach-label">SSOMA y Gestión de Riesgos:</span> Realicé, acompañé y aporté activamente en el diseño, implementación y actualización de matrices IPERC e Identificación de Aspectos e Impactos Ambientales (IAAs); lideré inspecciones de seguridad en campo para mitigar condiciones inseguras.</li>
-                            <li><span class="ach-label">Capacitación y Liderazgo:</span> Diseñé e impartí charlas de 5 minutos, inducciones y capacitaciones en SSOMA al personal operativo, consolidando un entorno de trabajo que logró la meta de <strong>"Cero Accidentes"</strong>.</li>
-                            <li><span class="ach-label">Homologación y Control Documental:</span> Brindé asesoramiento y acompañamiento en la elaboración, gestión y control de la documentación obligatoria de SST bajo la Ley N° 29783. Gestioné la homologación de proveedores con clientes estratégicos, logrando una <strong>reducción del 30%</strong> en los tiempos de entrega de documentación.</li>
-                            <li><span class="ach-label">Gestión Ambiental y Regulatoria:</span> Elaboré Instrumentos de Gestión Ambiental (IGA: DIA, PAD, ITS, PAP) y expedientes de licencias municipales (ITSE), asegurando cumplimiento normativo ante <strong>OEFA y OSINERGMIN</strong>.</li>
-                            <li><span class="ach-label">Gestión Técnico-Comercial:</span> Estructuré propuestas técnico-económicas de servicios SSOMA para clientes estratégicos, captando <strong>más de 15 cuentas corporativas nuevas</strong> e incrementando la tasa de recompra de servicios en un <strong>40%</strong>.</li>
-                        </ul>
-                        <div class="job-tags no-print">
-                            <span class="tag tag--env">ISO 9001</span><span class="tag tag--env">ISO 14001</span><span class="tag tag--env">ISO 45001</span><span class="tag tag--env">IPERC</span><span class="tag tag--env">Ley 29783</span><span class="tag tag--env">OEFA</span><span class="tag tag--env">OSINERGMIN</span><span class="tag tag--biz">Ventas B2B</span>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="job-card">
-                    <div class="job-marker no-print"></div>
-                    <div class="job-body">
-                        <div class="job-top">
-                            <div>
-                                <h4 class="job-company">Museo Jade Rivera</h4>
-                                <h5 class="job-role">Asesor de Operaciones y Experiencia del Cliente</h5>
-                            </div>
-                            <span class="job-date"><i class="fa-regular fa-calendar no-print"></i> Abr. 2021 &ndash; Jun. 2023</span>
-                        </div>
-                        <ul class="job-achievements">
-                            <li><span class="ach-label">Transformación Digital:</span> Lideré el proyecto de digitalización y catalogación de la base documental de la institución (<strong>+5,000 archivos</strong>), mejorando la trazabilidad y velocidad de acceso a la información.</li>
-                            <li><span class="ach-label">Relacionamiento Internacional:</span> Brindé atención profesionalizada y bilingüe (<strong>Español / Inglés</strong>) a visitantes y delegaciones internacionales, manteniendo altos estándares de calidad de servicio.</li>
-                        </ul>
-                        <div class="job-tags no-print">
-                            <span class="tag tag--tech">Digitalización</span><span class="tag tag--biz">Atención al Cliente</span><span class="tag tag--biz">Inglés Profesional</span><span class="tag tag--tech">Gestión Documental</span>
-                        </div>
-                    </div>
-                </article>
-
-            </div>
-        </section>
-
-        <!-- PORTFOLIO -->
-        <section class="cv-section no-print" id="portfolio">
-            <div class="section-head">
-                <span class="section-icon"><i class="fa-solid fa-folder-open"></i></span>
-                <h3 class="section-title">Portafolio de Soluciones</h3>
-            </div>
-            
-            <div class="portfolio-filters">
-                <button class="portfolio-filter-btn active" data-filter="all">Todos</button>
-                <button class="portfolio-filter-btn" data-filter="tech">Tecnología &amp; IA</button>
-                <button class="portfolio-filter-btn" data-filter="ssoma">SSOMA &amp; Consultoría</button>
-                <button class="portfolio-filter-btn" data-filter="bi">Analítica &amp; BI</button>
-            </div>
-
-            <div class="portfolio-grid">
-                <!-- STROMA Dashboard -->
-                <div class="portfolio-card" data-category="tech ssoma">
-                    <div class="portfolio-card-img-wrapper">
-                        <img src="stroma_suite.png" alt="STROMA Suite SSOMA Dashboard">
-                        <div class="portfolio-card-overlay">
-                            <span class="portfolio-card-category">Tecnología &amp; IA</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-card-content">
-                        <h4 class="portfolio-card-title">STROMA Suite &middot; Control Predictivo IA</h4>
-                        <p class="portfolio-card-desc">Plataforma IoT de prevención de riesgos y detección de fatiga activa para seguridad ocupacional en minería e industria.</p>
-                        <button class="portfolio-card-btn" data-project="stroma">Ver Detalles <i class="fa-solid fa-arrow-right"></i></button>
-                    </div>
+        <section class="section profile-section" id="profile">
+            <div class="page-shell">
+                <div class="section-heading" data-reveal>
+                    <div><p class="section-index">01 / Perfil</p><h2>Gestión, operación<br>y datos en un perfil.</h2></div>
+                    <p class="section-lead">Bachiller en Ingeniería y Gestión Ambiental con experiencia aplicada en SSOMA, procesos, monitoreo crítico y automatización.</p>
                 </div>
 
-                <!-- Checklist SSOMA -->
-                <div class="portfolio-card" data-category="ssoma bi">
-                    <div class="portfolio-card-img-wrapper">
-                        <img src="stroma_landing.png" alt="STROMA Landing Page">
-                        <div class="portfolio-card-overlay">
-                            <span class="portfolio-card-category">SSOMA &amp; Consultoría</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-card-content">
-                        <h4 class="portfolio-card-title">Auditor SSOMA &amp; Checklist Interactivo</h4>
-                        <p class="portfolio-card-desc">Herramienta web automatizada para auditar 23 estándares críticos de SST, generando informes y planes de acción inmediatos en PDF.</p>
-                        <button class="portfolio-card-btn" data-project="checklist">Ver Detalles <i class="fa-solid fa-arrow-right"></i></button>
-                    </div>
-                </div>
-
-                <!-- NiFi Pipeline -->
-                <div class="portfolio-card" data-category="tech bi">
-                    <div class="portfolio-card-img-wrapper">
-                        <img src="inoc_suite.png" alt="INOC Suite ShiftGuard">
-                        <div class="portfolio-card-overlay">
-                            <span class="portfolio-card-category">Tecnología &amp; IA</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-card-content">
-                        <h4 class="portfolio-card-title">Pipeline de Ingesta Telecom IPT</h4>
-                        <p class="portfolio-card-desc">Motor automatizado en Python y Apache NiFi para extraer, limpiar e integrar incidentes de red crítica en Google Cloud Platform.</p>
-                        <button class="portfolio-card-btn" data-project="nifi">Ver Detalles <i class="fa-solid fa-arrow-right"></i></button>
-                    </div>
-                </div>
-
-                <!-- Power BI Dashboard -->
-                <div class="portfolio-card" data-category="bi">
-                    <div class="portfolio-card-img-wrapper">
-                        <img src="sustainability_dashboard.png" alt="Executive Dashboard Mockup">
-                        <div class="portfolio-card-overlay">
-                            <span class="portfolio-card-category">Analítica &amp; BI</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-card-content">
-                        <h4 class="portfolio-card-title">Dashboard Ejecutivo de Sostenibilidad</h4>
-                        <p class="portfolio-card-desc">Cuadro de mando analítico en Power BI para control de incidentes, cumplimiento ambiental de residuos y uptime en tiempo real.</p>
-                        <button class="portfolio-card-btn" data-project="powerbi">Ver Detalles <i class="fa-solid fa-arrow-right"></i></button>
+                <div class="profile-brief" data-reveal>
+                    <p>Conecto requisitos técnicos y legales con herramientas que el equipo realmente puede usar. He trabajado con matrices IPERC e IAA, inspecciones, capacitación, homologaciones, instrumentos ambientales y control operativo; además desarrollo soluciones con Python, SQL y Power BI para reducir carga manual y mejorar la trazabilidad.</p>
+                    <div class="profile-focus" aria-label="Fortalezas profesionales">
+                        <article><span>01</span><div><strong>SSOMA y ambiente</strong><small>Controles, riesgos y cumplimiento</small></div></article>
+                        <article><span>02</span><div><strong>Procesos</strong><small>Orden, evidencia y mejora continua</small></div></article>
+                        <article><span>03</span><div><strong>Datos</strong><small>Automatización y visualización</small></div></article>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- EDUCACION -->
-        <section class="cv-section" id="education">
-            <div class="section-head">
-                <span class="section-icon no-print"><i class="fa-solid fa-graduation-cap"></i></span>
-                <h3 class="section-title">Formación Académica</h3>
+        <section class="impact-section" id="impact">
+            <div class="page-shell impact-layout">
+                <div class="impact-intro" data-reveal>
+                    <p class="section-index section-index--light">02 / Resultados</p>
+                    <h2>Impacto verificable.</h2>
+                </div>
+                <div class="metrics-grid">
+                    <article data-reveal data-delay="0"><strong><span class="metric-number" data-target="40">40</span><small>h/sem</small></strong><p>de trabajo manual reducido mediante automatización.</p></article>
+                    <article data-reveal data-delay="70"><strong><span class="metric-number" data-target="99">99</span><small>.9%</small></strong><p>de disponibilidad reportada en infraestructura crítica.</p></article>
+                    <article data-reveal data-delay="140"><strong><small>+</small><span class="metric-number" data-target="15">15</span></strong><p>cuentas corporativas captadas con propuestas técnicas.</p></article>
+                    <article data-reveal data-delay="210"><strong><span class="metric-number" data-target="5000">5000</span><small>+</small></strong><p>archivos digitalizados y catalogados con trazabilidad.</p></article>
+                </div>
             </div>
-            <div class="section-body">
-                <div class="edu-card">
-                    <div class="edu-logo no-print"><i class="fa-solid fa-university"></i></div>
-                    <div class="edu-body">
-                        <div class="edu-top">
-                            <div>
-                                <h4 class="edu-institution">Universidad Peruana de Ciencias Aplicadas (UPC)</h4>
-                                <h5 class="edu-degree">Bachiller en Ingeniería y Gestión Ambiental</h5>
-                            </div>
-                            <span class="job-date"><i class="fa-regular fa-calendar no-print"></i> Graduado 2025 &middot; Titulado 2026</span>
+        </section>
+
+        <section class="section experience-section" id="experience">
+            <div class="page-shell experience-layout">
+                <aside class="experience-aside" data-reveal>
+                    <p class="section-index">03 / Trayectoria</p>
+                    <h2>Experiencia relevante.</h2>
+                    <p>Telecomunicaciones, producto SSOMA, consultoría y gestión documental.</p>
+                    <div class="aside-line" aria-hidden="true"><span></span></div>
+                </aside>
+
+                <div class="experience-list">
+                    <article class="experience-item" data-reveal>
+                        <div class="experience-date"><span>2023</span><i></i><span>Actualidad</span></div>
+                        <div class="experience-card interactive-surface">
+                            <div class="experience-top"><div><p>Internet Para Todos (IPT) · Atento</p><h3>Ingeniero INOC <em>· Automatización y analítica operativa</em></h3></div><span class="experience-sector">Telecom</span></div>
+                            <ul>
+                                <li>Automaticé el <strong>100% de la reportería operativa recurrente</strong> con Python, reduciendo aproximadamente <strong>40 horas semanales</strong> de carga manual.</li>
+                                <li>Diseñé tableros Power BI y controles SQL para monitorear incidencias, SLA y matrices operativas.</li>
+                                <li>Superviso infraestructura crítica y coordino incidentes, contribuyendo a sostener una disponibilidad reportada de <strong>99.9%</strong>.</li>
+                            </ul>
+                            <div class="tag-list no-print"><span>Python</span><span>Power BI</span><span>SQL</span><span>Apache NiFi</span><span>GCP</span></div>
                         </div>
-                        <p class="edu-thesis">
-                            <i class="fa-solid fa-book-open no-print"></i>
-                            <strong>Tesis:</strong> "Producción de Biohidrógeno mediante Fermentación Oscura a partir de residuos urbanos" &mdash; Investigación aplicada en valorización energética y economía circular.
-                        </p>
-                    </div>
+                    </article>
+
+                    <article class="experience-item" data-reveal>
+                        <div class="experience-date"><span>2026</span><i></i><span>Actualidad</span></div>
+                        <div class="experience-card interactive-surface">
+                            <div class="experience-top"><div><p>STROMA · Proyecto independiente</p><h3>Fundador y desarrollador de producto</h3></div><span class="experience-sector">SSOMA</span></div>
+                            <ul>
+                                <li>Diseñé una suite modular para centralizar IPERC, ATS/PETAR, contratistas, capacitación, indicadores y gestión ambiental.</li>
+                                <li>Implementé un diagnóstico de <strong>23 requisitos críticos</strong> y convertí necesidades técnico-legales en flujos y paneles trazables.</li>
+                            </ul>
+                            <div class="tag-list no-print"><span>Producto digital</span><span>IPERC</span><span>Automatización</span><span>IA aplicada</span></div>
+                        </div>
+                    </article>
+
+                    <article class="experience-item" data-reveal>
+                        <div class="experience-date"><span>2024</span><i></i><span>2025</span></div>
+                        <div class="experience-card interactive-surface">
+                            <div class="experience-top"><div><p>Solugrifos S.A.C.</p><h3>Gestor comercial <em>· Soporte técnico SIG / SST</em></h3></div><span class="experience-sector">Consultoría</span></div>
+                            <ul>
+                                <li>Participé en matrices IPERC e IAA, inspecciones, capacitación, IGA e ITSE.</li>
+                                <li>Reduje en <strong>30%</strong> los tiempos documentales y apoyé propuestas que captaron <strong>más de 15 cuentas</strong>.</li>
+                            </ul>
+                            <div class="tag-list no-print"><span>ISO 9001/14001/45001</span><span>Ley 29783</span><span>IGA</span><span>Ventas B2B</span></div>
+                        </div>
+                    </article>
+
+                    <article class="experience-item" data-reveal>
+                        <div class="experience-date"><span>2021</span><i></i><span>2023</span></div>
+                        <div class="experience-card interactive-surface">
+                            <div class="experience-top"><div><p>Museo Jade Rivera</p><h3>Asesor de operaciones y experiencia del cliente</h3></div><span class="experience-sector">Cultura</span></div>
+                            <ul>
+                                <li>Digitalicé y catalogué <strong>más de 5,000 archivos</strong> y atendí en español e inglés a delegaciones internacionales.</li>
+                            </ul>
+                            <div class="tag-list no-print"><span>Gestión documental</span><span>Operaciones</span><span>Inglés</span></div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- HABILIDADES -->
-        <section class="cv-section" id="skills">
-            <div class="section-head">
-                <span class="section-icon no-print"><i class="fa-solid fa-layer-group"></i></span>
-                <h3 class="section-title">Competencias y Herramientas</h3>
-            </div>
-            <div class="section-body skills-grid">
-                <div class="skill-group">
-                    <h4 class="skill-group-title"><i class="fa-solid fa-leaf no-print"></i> Ingeniería, SSOMA y SIG</h4>
-                    <div class="skill-tags">
-                        <span class="tag tag--env">Normas ISO 9001 / 14001 / 45001</span>
-                        <span class="tag tag--env">Ley N° 29783 (SST)</span>
-                        <span class="tag tag--env">Matrices IPERC</span>
-                        <span class="tag tag--env">Aspectos e Impactos Ambientales (IAAs)</span>
-                        <span class="tag tag--env">Instrumentos Ambientales (IGA)</span>
-                        <span class="tag tag--env">Gestión de Residuos</span>
-                        <span class="tag tag--env">Energías Renovables</span>
-                        <span class="tag tag--env">Control Documental SST</span>
-                    </div>
+        <section class="section projects-section" id="projects">
+            <div class="page-shell">
+                <div class="section-heading" data-reveal>
+                    <div><p class="section-index">04 / Proyectos</p><h2>Producto y resultados.</h2></div>
+                    <p class="section-lead">Dos casos que evidencian cómo traduzco necesidades complejas en sistemas claros y utilizables.</p>
                 </div>
-                <div class="skill-group">
-                    <h4 class="skill-group-title"><i class="fa-solid fa-code no-print"></i> Tecnología y Análisis de Datos</h4>
-                    <div class="skill-tags">
-                        <span class="tag tag--tech">Python &middot; Pandas &middot; NumPy</span>
-                        <span class="tag tag--tech">SQL &middot; MS SQL Server</span>
-                        <span class="tag tag--tech">Power BI (Avanzado)</span>
-                        <span class="tag tag--tech">Apache NiFi</span>
-                        <span class="tag tag--tech">Google Cloud Platform</span>
-                        <span class="tag tag--tech">AutoCAD</span>
-                        <span class="tag tag--tech">ArcGIS</span>
-                        <span class="tag tag--tech">Excel Analítico</span>
-                    </div>
-                </div>
-                <div class="skill-group">
-                    <h4 class="skill-group-title"><i class="fa-solid fa-handshake no-print"></i> Gestión Comercial y Estrategia</h4>
-                    <div class="skill-tags">
-                        <span class="tag tag--biz">Ventas Corporativas B2B</span>
-                        <span class="tag tag--biz">Negociación Técnico-Comercial</span>
-                        <span class="tag tag--biz">Plataformas CRM</span>
-                        <span class="tag tag--biz">Marketing Digital (Meta Ads &middot; Google Ads)</span>
-                        <span class="tag tag--biz">Gestión de Redes Sociales</span>
-                    </div>
-                </div>
-                <div class="skill-group">
-                    <h4 class="skill-group-title"><i class="fa-solid fa-comments no-print"></i> Idiomas y Competencias Blandas</h4>
-                    <div class="skill-tags">
-                        <span class="tag">Español &middot; Nativo</span>
-                        <span class="tag">Inglés &middot; Intermedio (B1-B2)</span>
-                        <span class="tag">Liderazgo de Equipos en Campo</span>
-                        <span class="tag">Trabajo bajo Presión</span>
-                        <span class="tag">Resolución de Problemas</span>
-                        <span class="tag">Comunicación Técnica</span>
-                    </div>
+
+                <div class="project-grid">
+                    <article class="project-card project-card--showcase interactive-surface" data-reveal>
+                        <div class="project-gallery" data-project-gallery>
+                            <figure class="project-stage"><img class="project-active-image" src="stroma_dashboard.webp" alt="Dashboard centralizado de STROMA para gestión SSOMA" width="1600" height="836" loading="lazy"></figure>
+                            <div class="project-thumbnails" role="tablist" aria-label="Capturas de STROMA">
+                                <button class="gallery-thumb is-active" type="button" role="tab" aria-selected="true" data-gallery-src="stroma_dashboard.webp" data-gallery-alt="Dashboard centralizado de STROMA para gestión SSOMA"><img src="stroma_dashboard.webp" alt="" width="1600" height="836" loading="lazy"><span>Centro de mando</span></button>
+                                <button class="gallery-thumb" type="button" role="tab" aria-selected="false" data-gallery-src="stroma_sst.webp" data-gallery-alt="Módulo de Seguridad y Salud en el Trabajo de STROMA"><img src="stroma_sst.webp" alt="" width="1600" height="853" loading="lazy"><span>Módulo SST</span></button>
+                                <button class="gallery-thumb" type="button" role="tab" aria-selected="false" data-gallery-src="stroma_landing.webp" data-gallery-alt="Página de presentación de STROMA"><img src="stroma_landing.webp" alt="" width="1389" height="891" loading="lazy"><span>Producto</span></button>
+                            </div>
+                        </div>
+                        <div class="project-copy"><div class="project-meta"><span>Producto en desarrollo</span><small>01</small></div><h3>STROMA Suite</h3><p>Plataforma modular para centralizar SST, gestión ambiental, cumplimiento legal, riesgos, capacitación y reportería ejecutiva.</p><ul class="project-points"><li>Arquitectura y experiencia de producto</li><li>Flujos SSOMA con trazabilidad</li><li>Indicadores y alertas operativas</li></ul><div class="project-footer"><span>Producto · UX · Cumplimiento</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></div></div>
+                    </article>
+                    <article class="project-card project-card--showcase interactive-surface" data-reveal data-delay="80">
+                        <div class="project-gallery" data-project-gallery>
+                            <figure class="project-stage"><img class="project-active-image" src="inoc_monitor.webp" alt="Panel de monitoreo de operaciones INOC" width="1600" height="847" loading="lazy"></figure>
+                            <div class="project-thumbnails" role="tablist" aria-label="Capturas de automatización INOC">
+                                <button class="gallery-thumb is-active" type="button" role="tab" aria-selected="true" data-gallery-src="inoc_monitor.webp" data-gallery-alt="Panel de monitoreo de operaciones INOC"><img src="inoc_monitor.webp" alt="" width="1600" height="847" loading="lazy"><span>Monitoreo</span></button>
+                                <button class="gallery-thumb" type="button" role="tab" aria-selected="false" data-gallery-src="inoc_report.webp" data-gallery-alt="Reporte comparativo y comportamiento de contadores INOC"><img src="inoc_report.webp" alt="" width="1600" height="830" loading="lazy"><span>Reportería</span></button>
+                                <button class="gallery-thumb" type="button" role="tab" aria-selected="false" data-gallery-src="inoc_systems.webp" data-gallery-alt="Panel de procesos y capacidad de sistemas INOC"><img src="inoc_systems.webp" alt="" width="1600" height="831" loading="lazy"><span>Sistemas</span></button>
+                            </div>
+                        </div>
+                        <div class="project-copy"><div class="project-meta"><span>Caso profesional</span><small>02</small></div><h3>Automatización INOC</h3><p>Monitoreo y reportería para consolidar información operativa, detectar desviaciones y reducir tareas recurrentes.</p><ul class="project-points"><li>Reportería recurrente automatizada</li><li>Controles operativos y de capacidad</li><li>Seguimiento visual de incidencias</li></ul><div class="project-footer"><span>Python · SQL · Power BI</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></div></div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- CERTIFICACIONES -->
-        <section class="cv-section" id="certifications">
-            <div class="section-head">
-                <span class="section-icon no-print"><i class="fa-solid fa-certificate"></i></span>
-                <h3 class="section-title">Certificaciones</h3>
-            </div>
-            <div class="section-body cert-grid">
-                <div class="cert-card">
-                    <div class="cert-icon no-print"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div class="cert-info">
-                        <span class="cert-name">Diagnóstico y Línea Base de SST</span>
-                        <span class="cert-org">CALGESA &middot; 2024</span>
-                    </div>
+        <section class="credentials-section" id="credentials">
+            <div class="page-shell credentials-grid">
+                <div class="credentials-intro" data-reveal>
+                    <p class="section-index">05 / Formación</p>
+                    <h2>Base técnica.<br><em>Curiosidad constante.</em></h2>
+                    <p>Una formación ambiental reforzada por sistemas de gestión, programación y visualización de información.</p>
                 </div>
-                <div class="cert-card">
-                    <div class="cert-icon no-print"><i class="fa-brands fa-python"></i></div>
-                    <div class="cert-info">
-                        <span class="cert-name">Python for Everybody (Especialización)</span>
-                        <span class="cert-org">Univ. of Michigan / Coursera &middot; 2024</span>
-                    </div>
+
+                <div class="education-block" data-reveal data-delay="80">
+                    <span class="credentials-label">Formación académica</span>
+                    <article><div><p>Universidad Peruana de Ciencias Aplicadas</p><h3>Bachiller en Ingeniería y Gestión Ambiental</h3></div><span>2025</span></article>
+                    <p class="thesis"><strong>Tesis</strong> Producción de biohidrógeno mediante fermentación oscura a partir de residuos urbanos.</p>
                 </div>
-                <div class="cert-card">
-                    <div class="cert-icon no-print"><i class="fa-solid fa-gears"></i></div>
-                    <div class="cert-info">
-                        <span class="cert-name">Sistemas Integrados de Gestión (SIG)</span>
-                        <span class="cert-org">ISO 9001 / 14001 / 45001 &middot; Interpretación</span>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <div class="cert-icon no-print"><i class="fa-solid fa-chart-bar"></i></div>
-                    <div class="cert-info">
-                        <span class="cert-name">Power BI Data Visualization</span>
-                        <span class="cert-org">Coursera &middot; 2024</span>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <div class="cert-icon no-print"><i class="fa-solid fa-rocket"></i></div>
-                    <div class="cert-info">
-                        <span class="cert-name">How to Start Your Own Business</span>
-                        <span class="cert-org">Michigan State Univ. / Coursera &middot; 2021</span>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <div class="cert-icon no-print"><i class="fa-brands fa-meta"></i></div>
-                    <div class="cert-info">
-                        <span class="cert-name">Medición y Optimización de Redes Sociales</span>
-                        <span class="cert-org">Meta / Coursera &middot; 2024</span>
-                    </div>
+
+                <div class="certification-block" data-reveal data-delay="160">
+                    <span class="credentials-label">Formación complementaria</span>
+                    <ul>
+                        <li><div><strong>Diagnóstico y Línea Base de SST</strong><span>CALGESA</span></div><small>2024</small></li>
+                        <li><div><strong>Python for Everybody</strong><span>University of Michigan / Coursera</span></div><small>2024</small></li>
+                        <li><div><strong>Power BI Data Visualization</strong><span>Coursera</span></div><small>2024</small></li>
+                        <li><div><strong>Interpretación de SIG</strong><span>ISO 9001 · 14001 · 45001</span></div><small>Formación</small></li>
+                    </ul>
                 </div>
             </div>
         </section>
 
+        <section class="section capabilities-section" id="capabilities">
+            <div class="page-shell">
+                <div class="section-heading" data-reveal>
+                    <div><p class="section-index">06 / Capacidades</p><h2>Herramientas con contexto.</h2></div>
+                    <p class="section-lead">No son listas aisladas: son recursos que utilizo para resolver problemas concretos.</p>
+                </div>
+                <div class="capabilities-grid">
+                    <article data-reveal><span>A</span><h3>SSOMA &amp; SIG</h3><p>Ley N.° 29783 · IPERC · ATS · PETAR · SCTR · homologación · inspecciones · capacitación · ISO 9001/14001/45001</p></article>
+                    <article data-reveal data-delay="60"><span>B</span><h3>Gestión ambiental</h3><p>IGA · DIA · PAD · ITS · PAP · residuos sólidos · aspectos e impactos · OEFA · OSINERGMIN · ITSE</p></article>
+                    <article data-reveal data-delay="120"><span>C</span><h3>Datos &amp; automatización</h3><p>Python · Pandas · SQL · Power BI · Power Query · Excel analítico · Apache NiFi · GCP</p></article>
+                    <article data-reveal data-delay="180"><span>D</span><h3>Operaciones &amp; negocio</h3><p>SLA · incidentes · mejora de procesos · gestión documental · propuestas técnicas · ventas B2B · coordinación</p></article>
+                </div>
+                <div class="language-line" data-reveal><p><strong>Idiomas</strong> Español nativo · Inglés intermedio (B1–B2)</p><p><strong>Adicionales</strong> AutoCAD · ArcGIS · Microsoft Office · CRM</p></div>
+            </div>
+        </section>
+
+        <section class="contact-section" id="contact">
+            <div class="contact-orbit no-print" aria-hidden="true"><span></span><span></span></div>
+            <div class="page-shell contact-inner" data-reveal>
+                <p class="section-index section-index--light">07 / Contacto</p>
+                <h2>Conversemos sobre<br><em>el siguiente desafío.</em></h2>
+                <p>Disponible para prácticas profesionales y posiciones de asistencia o análisis junior en SSOMA, ambiente, consultoría, datos u operaciones.</p>
+                <div class="contact-actions no-print">
+                    <a class="button button--paper magnetic" href="mailto:vobrafla@gmail.com">Escribirme <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <button class="button button--outline-paper" id="copy-email" type="button" data-email="vobrafla@gmail.com"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copiar correo</button>
+                    <a class="button button--outline-paper" href="https://linkedin.com/in/flavio-bravo-o090300" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </div>
+                <p class="copy-status no-print" id="copy-status" role="status" aria-live="polite"></p>
+                <div class="contact-details">
+                    <a href="tel:+51924585930">+51 924 585 930</a><a href="mailto:vobrafla@gmail.com">vobrafla@gmail.com</a><span>Chorrillos, Lima, Perú</span>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="no-print site-footer">
-        <p>&copy; 2026 Flavio Esteban Bravo Oyola &nbsp;&middot;&nbsp; Lima, Perú</p>
+    <footer class="site-footer no-print">
+        <div class="page-shell"><div class="brand brand--footer"><span class="brand-mark">FB</span><span class="brand-copy"><strong>Flavio Bravo</strong><small>Gestión · Operaciones · Datos</small></span></div><p>Perfil actualizado · <span id="current-year">2026</span></p><a href="#hero">Volver arriba <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a></div>
     </footer>
-    </div>
 
-    <!-- PORTFOLIO DETAIL MODAL -->
-    <div id="portfolio-modal" class="no-print portfolio-modal" aria-hidden="true" role="dialog">
-        <div class="modal-backdrop"></div>
-        <div class="modal-container">
-            <button class="modal-close" aria-label="Cerrar modal"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-content-wrapper">
-                <div class="modal-header-img" id="modal-img-container">
-                    <!-- Image dynamic injection -->
-                </div>
-                <div class="modal-body-content">
-                    <h4 class="modal-title" id="modal-title">Título del Proyecto</h4>
-                    <h5 class="modal-subtitle" id="modal-subtitle">Subtítulo del Proyecto</h5>
-                    
-                    <div class="modal-grid">
-                        <div class="modal-desc-col">
-                            <div class="modal-section-block">
-                                <h6><i class="fa-solid fa-triangle-exclamation"></i> El Problema</h6>
-                                <p id="modal-problem">Descripción del problema...</p>
-                            </div>
-                            <div class="modal-section-block">
-                                <h6><i class="fa-solid fa-circle-check"></i> La Solución</h6>
-                                <p id="modal-solution">Descripción de la solución...</p>
-                            </div>
-                        </div>
-                        <div class="modal-meta-col">
-                            <div class="modal-section-block">
-                                <h6><i class="fa-solid fa-chart-simple"></i> Impacto Logrado</h6>
-                                <p id="modal-impact" class="modal-impact-text">Métricas de impacto...</p>
-                            </div>
-                            <div class="modal-section-block">
-                                <h6><i class="fa-solid fa-laptop-code"></i> Tecnologías Utilizadas</h6>
-                                <div class="modal-tech-tags" id="modal-tech">
-                                    <!-- Dynamic tags -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js?v=3.0"></script>
+    <button class="scroll-top no-print" id="scroll-top" type="button" aria-label="Volver al inicio"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+    <script src="script.js?v=5.1"></script>
 </body>
 </html>

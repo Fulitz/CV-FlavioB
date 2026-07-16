@@ -1,491 +1,351 @@
-/* script.js — Theme toggle, typed animation, scroll spy, stat counter */
+/* CV corporativo — navegación, movimiento, profundidad y accesibilidad */
 (function () {
     "use strict";
 
-    /* ── THEME ─────────────────────────────── */
-    const body        = document.body;
-    const themeBtn    = document.getElementById("theme-toggle");
-    const themeIcon   = document.getElementById("theme-icon");
-    const saved       = localStorage.getItem("theme");
+    const body = document.body;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-    function applyTheme(isLight) {
-        body.classList.toggle("light", isLight);
-        themeIcon.className = isLight ? "fa-solid fa-moon" : "fa-solid fa-sun";
+    function safeStorageGet(key) {
+        try { return window.localStorage.getItem(key); } catch (_) { return null; }
     }
-    applyTheme(saved === "light");
 
-    themeBtn.addEventListener("click", (e) => {
-        const goLight = !body.classList.contains("light");
+    function safeStorageSet(key, value) {
+        try { window.localStorage.setItem(key, value); } catch (_) { /* Optional enhancement. */ }
+    }
 
-        // Fallback for browsers that don't support View Transitions or if user prefers reduced motion
-        if (!document.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            localStorage.setItem("theme", goLight ? "light" : "dark");
-            applyTheme(goLight);
-            return;
+    function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+    }
+
+    /* ── Tema editorial ──────────────────────────────────────────────── */
+    const themeButton = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-icon");
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+    function applyTheme(theme) {
+        const isDark = theme === "dark";
+        body.classList.toggle("dark", isDark);
+        if (themeIcon) themeIcon.className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+        if (themeButton) {
+            const label = isDark ? "Cambiar a tema claro" : "Cambiar a tema oscuro";
+            themeButton.setAttribute("aria-label", label);
+            themeButton.title = label;
         }
+        if (themeMeta) themeMeta.content = isDark ? "#101712" : "#f2eee5";
+    }
 
-        // Get click coordinates (or fall back to button center if keyboard event)
-        const rect = themeBtn.getBoundingClientRect();
-        const x = e.clientX ?? (rect.left + rect.width / 2);
-        const y = e.clientY ?? (rect.top + rect.height / 2);
+    applyTheme(safeStorageGet("cv-corporate-theme") || "light");
 
-        // Distance to furthest corner of screen
-        const endRadius = Math.hypot(
-            Math.max(x, window.innerWidth - x),
-            Math.max(y, window.innerHeight - y)
-        );
-
-        // Start transition
-        const transition = document.startViewTransition(() => {
-            localStorage.setItem("theme", goLight ? "light" : "dark");
-            applyTheme(goLight);
+    if (themeButton) {
+        themeButton.addEventListener("click", function () {
+            const next = body.classList.contains("dark") ? "light" : "dark";
+            safeStorageSet("cv-corporate-theme", next);
+            applyTheme(next);
         });
+    }
 
-        // Animate the clipPath
-        transition.ready.then(() => {
-            const clipPath = [
-                `circle(0px at ${x}px ${y}px)`,
-                `circle(${endRadius}px at ${x}px ${y}px)`
-            ];
+    /* ── Hora local ──────────────────────────────────────────────────── */
+    const localTime = document.getElementById("local-time");
+    function updateLocalTime() {
+        if (!localTime) return;
+        const time = new Intl.DateTimeFormat("es-PE", {
+            timeZone: "America/Lima",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+        }).format(new Date());
+        localTime.textContent = "Lima · " + time;
+        localTime.setAttribute("aria-label", "Hora local en Lima: " + time);
+    }
+    updateLocalTime();
+    window.setInterval(updateLocalTime, 30000);
 
-            document.documentElement.animate(
-                {
-                    clipPath: goLight ? clipPath : [...clipPath].reverse(),
-                },
-                {
-                    duration: 450,
-                    easing: "cubic-bezier(0.4, 0, 0.2, 1)",
-                    pseudoElement: goLight
-                        ? "::view-transition-new(root)"
-                        : "::view-transition-old(root)"
-                }
-            );
+    /* ── Menú responsive ─────────────────────────────────────────────── */
+    const menuButton = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    function setMenu(open) {
+        if (!menuButton || !navLinks) return;
+        navLinks.classList.toggle("open", open);
+        menuButton.setAttribute("aria-expanded", String(open));
+        menuButton.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    }
+
+    if (menuButton && navLinks) {
+        menuButton.addEventListener("click", function () {
+            setMenu(menuButton.getAttribute("aria-expanded") !== "true");
         });
+        navLinks.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () { setMenu(false); });
+        });
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") setMenu(false);
+        });
+        document.addEventListener("click", function (event) {
+            if (!navLinks.classList.contains("open")) return;
+            if (!navLinks.contains(event.target) && !menuButton.contains(event.target)) setMenu(false);
+        });
+    }
+
+    /* ── Revelado progresivo ─────────────────────────────────────────── */
+    const revealItems = Array.from(document.querySelectorAll("[data-reveal]"));
+    revealItems.forEach(function (item) {
+        const delay = Number(item.dataset.delay || 0);
+        item.style.setProperty("--reveal-delay", delay + "ms");
     });
 
-    /* ── PRINT PDF ─────────────────────────── */
-    document.getElementById("print-pdf").addEventListener("click", () => window.print());
-
-    /* ── TYPED EFFECT ──────────────────────── */
-    const phrases = [
-        "Fundador de STROMA",
-        "Analista de Datos",
-        "Especialista SSOMA",
-        "Automatización Python",
-        "Power BI & SQL",
-        "SIG ISO 9001/14001/45001"
-    ];
-    const el = document.getElementById("typed-role");
-    if (el) {
-        let pi = 0, ci = 0, deleting = false;
-        function type() {
-            const phrase = phrases[pi];
-            el.textContent = deleting ? phrase.slice(0, ci--) : phrase.slice(0, ci++);
-            if (!el.nextSibling || el.nextSibling.className !== "cursor") {
-                const cur = document.createElement("span");
-                cur.className = "cursor";
-                el.after(cur);
-            }
-            let delay = deleting ? 55 : 95;
-            if (!deleting && ci > phrase.length)      { delay = 1800; deleting = true; }
-            else if (deleting && ci < 0)               { deleting = false; ci = 0; pi = (pi + 1) % phrases.length; delay = 400; }
-            setTimeout(type, delay);
-        }
-        setTimeout(type, 800);
+    if (!reducedMotion.matches && "IntersectionObserver" in window) {
+        body.classList.add("motion-ready");
+        const revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("revealed");
+                revealObserver.unobserve(entry.target);
+            });
+        }, { rootMargin: "0px 0px -8%", threshold: .08 });
+        revealItems.forEach(function (item) { revealObserver.observe(item); });
+    } else {
+        revealItems.forEach(function (item) { item.classList.add("revealed"); });
     }
 
-    /* ── SCROLL REVEAL ─────────────────────── */
-    const sections = document.querySelectorAll(".cv-section");
-    const revealObs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); revealObs.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    sections.forEach(s => revealObs.observe(s));
+    /* ── Scroll: progreso, cabecera, navegación y parallax ───────────── */
+    const header = document.getElementById("site-header");
+    const progressBar = document.getElementById("scroll-progress-bar");
+    const scrollTopButton = document.getElementById("scroll-top");
+    const experienceSection = document.getElementById("experience");
+    const experienceProgress = document.querySelector(".aside-line span");
+    const parallaxItems = Array.from(document.querySelectorAll("[data-parallax]"));
+    let previousScrollY = window.scrollY;
+    let scrollTicking = false;
 
-    /* ── SIDE NAV SPY ──────────────────────── */
-    const navDots    = document.querySelectorAll(".nav-dot");
-    const allSections = document.querySelectorAll("section[id]");
-    const spyObs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                navDots.forEach(d => d.classList.remove("active"));
-                const active = document.querySelector(`.nav-dot[href="#${e.target.id}"]`);
+    function updateScrollState() {
+        const scrollY = window.scrollY;
+        const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+        const progress = clamp(scrollY / scrollable, 0, 1);
+
+        if (progressBar) progressBar.style.transform = "scaleX(" + progress + ")";
+        if (header) {
+            header.classList.toggle("scrolled", scrollY > 26);
+            const movingDown = scrollY > previousScrollY + 8;
+            const movingUp = scrollY < previousScrollY - 5;
+            const menuOpen = menuButton && menuButton.getAttribute("aria-expanded") === "true";
+            if (movingDown && scrollY > 520 && !menuOpen) header.classList.add("header-hidden");
+            if (movingUp || scrollY < 120) header.classList.remove("header-hidden");
+        }
+        if (scrollTopButton) scrollTopButton.classList.toggle("visible", scrollY > 780);
+
+        if (experienceSection && experienceProgress) {
+            const rect = experienceSection.getBoundingClientRect();
+            const sectionProgress = clamp((window.innerHeight * .45 - rect.top) / Math.max(rect.height - window.innerHeight * .5, 1), 0, 1);
+            experienceProgress.style.width = (sectionProgress * 100) + "%";
+        }
+
+        if (!reducedMotion.matches && window.innerWidth > 700) {
+            parallaxItems.forEach(function (item) {
+                const rect = item.getBoundingClientRect();
+                if (rect.bottom < -120 || rect.top > window.innerHeight + 120) return;
+                const factor = Number(item.dataset.parallax || 0);
+                const distance = (rect.top + rect.height / 2) - window.innerHeight / 2;
+                const offset = clamp(-distance * factor, -46, 46);
+                item.style.setProperty("--parallax-y", offset.toFixed(2) + "px");
+                if (item.classList.contains("portrait-stage")) {
+                    item.style.setProperty("--scroll-rotate", clamp(-distance * .0035, -2.5, 4.5).toFixed(2) + "deg");
+                }
+            });
+        }
+
+        previousScrollY = scrollY;
+        scrollTicking = false;
+    }
+
+    function requestScrollUpdate() {
+        if (scrollTicking) return;
+        scrollTicking = true;
+        window.requestAnimationFrame(updateScrollState);
+    }
+
+    window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+    window.addEventListener("resize", requestScrollUpdate, { passive: true });
+    updateScrollState();
+
+    if (scrollTopButton) {
+        scrollTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
+        });
+    }
+
+    /* ── Navegación activa ───────────────────────────────────────────── */
+    const sectionLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+    const observedSections = sectionLinks.map(function (link) {
+        return document.querySelector(link.getAttribute("href"));
+    }).filter(Boolean);
+
+    if ("IntersectionObserver" in window) {
+        const navObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                sectionLinks.forEach(function (link) { link.classList.remove("active"); });
+                const active = sectionLinks.find(function (link) { return link.getAttribute("href") === "#" + entry.target.id; });
                 if (active) active.classList.add("active");
-            }
-        });
-    }, { threshold: 0.4 });
-    allSections.forEach(s => spyObs.observe(s));
+            });
+        }, { rootMargin: "-28% 0px -62%", threshold: 0 });
+        observedSections.forEach(function (section) { navObserver.observe(section); });
+    }
 
-    /* ── ANIMATED COUNTERS ─────────────────── */
-    const statNums = document.querySelectorAll(".stat-number[data-target]");
-    const countObs = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (!e.isIntersecting) return;
-            countObs.unobserve(e.target);
-            const target = +e.target.dataset.target;
-            const duration = 1200;
-            const start = performance.now();
-            function update(now) {
-                const progress = Math.min((now - start) / duration, 1);
-                const ease = 1 - Math.pow(1 - progress, 3);
-                e.target.textContent = Math.round(ease * target);
-                if (progress < 1) requestAnimationFrame(update);
-            }
-            requestAnimationFrame(update);
-        });
-    }, { threshold: 0.5 });
-    statNums.forEach(n => countObs.observe(n));
-
-    /* ── SMOOTH NAV CLICK ──────────────────── */
-    navDots.forEach(dot => {
-        dot.addEventListener("click", e => {
-            e.preventDefault();
-            const target = document.querySelector(dot.getAttribute("href"));
-            if (target) target.scrollIntoView({ behavior: "smooth" });
-        });
-    });
-
-    /* ── 3D TILT EFFECT & GLOW COORDINATES ── */
-    const tiltCards = document.querySelectorAll(".job-body, .edu-card, .skill-group, .cert-card, .stat-card");
-    tiltCards.forEach(card => {
-        card.addEventListener("mousemove", e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const xc = rect.width / 2;
-            const yc = rect.height / 2;
-            const angleX = (yc - y) / 35; // Max angle X: ~3deg (much more subtle)
-            const angleY = (x - xc) / 35; // Max angle Y: ~3deg (much more subtle)
-            
-            card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.008, 1.008, 1.008)`;
-            
-            // Set coordinates for CSS radial glow
-            card.style.setProperty("--mouse-x", `${x}px`);
-            card.style.setProperty("--mouse-y", `${y}px`);
-        });
-        
-        card.addEventListener("mouseleave", () => {
-            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-        });
-    });
-    /* ── STROMA INTERACTIVE WIDGET ────────── */
-    const widgetTabs = document.querySelectorAll(".widget-tab");
-    const stromaDisplay = document.getElementById("stromaDisplay");
-    
-    const ipercData = {
-        soldador: {
-            peligro: "Exposición a humos metálicos (óx. de hierro, manganeso) y radiación UV no ionizante.",
-            riesgo: "Inhalación de sustancias tóxicas / Neumoconiosis, conjuntivitis actínica y quemaduras oculares.",
-            control: "Campanas extractoras móviles de alto vacío, respirador 3M con filtro P100 y sensor IoT de radiación UV en EPP."
-        },
-        operario: {
-            peligro: "Manipulación manual de cargas pesadas y tránsito de equipos móviles (montacargas).",
-            riesgo: "Sobreesfuerzo físico / Lumbalgia aguda y atropello por maquinaria / Fracturas graves.",
-            control: "Fajas lumbares ergonómicas de control activo, delimitación de pasarelas peatonales mediante proyectores LED y telemetría de proximidad."
-        },
-        conductor: {
-            peligro: "Jornadas de conducción prolongadas y factores climáticos adversos en rutas (neblina, lluvia).",
-            riesgo: "Somnolencia y fatiga extrema / Colisión vehicular, despiste o volcadura con fatalidad.",
-            control: "Cámaras inteligentes de fatiga activa (DSM) con alertas en cabina, telemetría GPS y control automático de horas de descanso."
-        }
-    };
-
-    if (widgetTabs && stromaDisplay) {
-        widgetTabs.forEach(tab => {
-            tab.addEventListener("click", () => {
-                widgetTabs.forEach(t => t.classList.remove("active"));
-                tab.classList.add("active");
-                
-                const puesto = tab.dataset.puesto;
-                const data = ipercData[puesto];
-                if (data) {
-                    stromaDisplay.innerHTML = `
-                        <div class="display-row"><span class="display-label">[Peligro]</span> <span class="display-val">${data.peligro}</span></div>
-                        <div class="display-row"><span class="display-label">[Riesgo]</span> <span class="display-val">${data.riesgo}</span></div>
-                        <div class="display-row"><span class="display-label">[Control Predictivo IA]</span> <span class="display-val display-val--hl">${data.control}</span></div>
-                    `;
+    /* ── Contadores ──────────────────────────────────────────────────── */
+    const metricNumbers = Array.from(document.querySelectorAll(".metric-number[data-target]"));
+    if (!reducedMotion.matches && "IntersectionObserver" in window) {
+        metricNumbers.forEach(function (number) { number.textContent = "0"; });
+        const counterObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                counterObserver.unobserve(entry.target);
+                const target = Number(entry.target.dataset.target);
+                const duration = target > 1000 ? 1500 : 1000;
+                const start = performance.now();
+                function frame(now) {
+                    const progress = clamp((now - start) / duration, 0, 1);
+                    const eased = 1 - Math.pow(1 - progress, 4);
+                    entry.target.textContent = Math.round(target * eased).toLocaleString("es-PE");
+                    if (progress < 1) window.requestAnimationFrame(frame);
                 }
+                window.requestAnimationFrame(frame);
+            });
+        }, { threshold: .5 });
+        metricNumbers.forEach(function (number) { counterObserver.observe(number); });
+    }
+
+    /* ── Superficies reactivas y profundidad 3D ──────────────────────── */
+    const interactiveSurfaces = Array.from(document.querySelectorAll(".interactive-surface"));
+    interactiveSurfaces.forEach(function (surface) {
+        surface.addEventListener("pointermove", function (event) {
+            const rect = surface.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width) * 100;
+            const y = ((event.clientY - rect.top) / rect.height) * 100;
+            surface.style.setProperty("--pointer-x", x.toFixed(1) + "%");
+            surface.style.setProperty("--pointer-y", y.toFixed(1) + "%");
+        });
+    });
+
+    const tiltItems = Array.from(document.querySelectorAll("[data-tilt]"));
+    if (finePointer.matches && !reducedMotion.matches) {
+        tiltItems.forEach(function (item) {
+            item.addEventListener("pointermove", function (event) {
+                const rect = item.getBoundingClientRect();
+                const strength = Number(item.dataset.tiltStrength || 3);
+                const x = (event.clientX - rect.left) / rect.width - .5;
+                const y = (event.clientY - rect.top) / rect.height - .5;
+                item.classList.add("tilting");
+                item.style.setProperty("--tilt-x", (-y * strength).toFixed(2) + "deg");
+                item.style.setProperty("--tilt-y", (x * strength).toFixed(2) + "deg");
+            });
+            item.addEventListener("pointerleave", function () {
+                item.classList.remove("tilting");
+                item.style.setProperty("--tilt-x", "0deg");
+                item.style.setProperty("--tilt-y", "0deg");
             });
         });
     }
 
-    /* ── CANVAS PARTICLE SYSTEM ──────────────── */
-    const canvas = document.getElementById("bg-canvas");
-    if (canvas) {
-        const ctx = canvas.getContext("2d");
-        let particles = [];
-        const maxParticles = 65;
-        const connectionDist = 110;
-        const mouse = { x: null, y: null, radius: 150 };
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
-        }
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.vx = (Math.random() - 0.5) * 0.4;
-                this.vy = (Math.random() - 0.5) * 0.4;
-                this.colorType = Math.random() > 0.5 ? "green" : "blue";
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Mouse interaction (gentle attraction)
-                if (mouse.x !== null) {
-                    const dx = mouse.x - this.x;
-                    const dy = mouse.y - this.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < mouse.radius) {
-                        const force = (mouse.radius - dist) / mouse.radius;
-                        this.x += (dx / dist) * force * 0.5;
-                        this.y += (dy / dist) * force * 0.5;
-                    }
-                }
-
-                // Wrap boundaries
-                if (this.x < 0) this.x = canvas.width;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.y < 0) this.y = canvas.height;
-                if (this.y > canvas.height) this.y = 0;
-            }
-
-            draw(isLight) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                if (isLight) {
-                    ctx.fillStyle = this.colorType === "green" 
-                        ? "rgba(46, 204, 113, 0.35)" 
-                        : "rgba(52, 152, 219, 0.35)";
-                } else {
-                    ctx.fillStyle = this.colorType === "green" 
-                        ? "rgba(43, 201, 142, 0.35)" 
-                        : "rgba(55, 126, 255, 0.35)";
-                }
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < maxParticles; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        window.addEventListener("resize", resizeCanvas);
-        window.addEventListener("mousemove", (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+    /* ── Botones magnéticos ──────────────────────────────────────────── */
+    const magneticItems = Array.from(document.querySelectorAll(".magnetic"));
+    if (finePointer.matches && !reducedMotion.matches) {
+        magneticItems.forEach(function (item) {
+            item.addEventListener("pointermove", function (event) {
+                const rect = item.getBoundingClientRect();
+                const x = (event.clientX - rect.left - rect.width / 2) * .12;
+                const y = (event.clientY - rect.top - rect.height / 2) * .16;
+                item.style.setProperty("--magnetic-x", x.toFixed(2) + "px");
+                item.style.setProperty("--magnetic-y", y.toFixed(2) + "px");
+            });
+            item.addEventListener("pointerleave", function () {
+                item.style.setProperty("--magnetic-x", "0px");
+                item.style.setProperty("--magnetic-y", "0px");
+            });
         });
-        window.addEventListener("mouseleave", () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const isLight = document.body.classList.contains("light");
-
-            // Update & Draw
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw(isLight);
-            }
-
-            // Draw connection lines
-            ctx.lineWidth = 0.6;
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < connectionDist) {
-                        const alpha = (1 - dist / connectionDist) * 0.12;
-                        if (isLight) {
-                            ctx.strokeStyle = `rgba(0, 0, 0, ${alpha})`;
-                        } else {
-                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.85})`;
-                        }
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        resizeCanvas();
-        animate();
     }
 
-    /* ── PORTFOLIO FILTERS ─────────────────── */
-    const filterBtns = document.querySelectorAll(".portfolio-filter-btn");
-    const portCards  = document.querySelectorAll(".portfolio-card");
+    /* ── Galerías compactas de proyectos ─────────────────────────────── */
+    const projectGalleries = Array.from(document.querySelectorAll("[data-project-gallery]"));
+    projectGalleries.forEach(function (gallery) {
+        const activeImage = gallery.querySelector(".project-active-image");
+        const controls = Array.from(gallery.querySelectorAll("[data-gallery-src]"));
+        if (!activeImage || !controls.length) return;
 
-    filterBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            filterBtns.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
+        controls.forEach(function (control) {
+            control.addEventListener("click", function () {
+                if (control.classList.contains("is-active")) return;
+                controls.forEach(function (item) {
+                    const selected = item === control;
+                    item.classList.toggle("is-active", selected);
+                    item.setAttribute("aria-selected", String(selected));
+                });
 
-            const filterValue = btn.dataset.filter;
-
-            portCards.forEach(card => {
-                const categories = card.dataset.category.split(" ");
-                if (filterValue === "all" || categories.includes(filterValue)) {
-                    card.classList.remove("fade-out");
-                    card.classList.add("fade-in");
-                } else {
-                    card.classList.remove("fade-in");
-                    card.classList.add("fade-out");
-                }
+                activeImage.classList.add("is-switching");
+                const updateImage = function () {
+                    activeImage.src = control.dataset.gallerySrc;
+                    activeImage.alt = control.dataset.galleryAlt || "Captura del proyecto";
+                    activeImage.classList.remove("is-switching");
+                };
+                if (reducedMotion.matches) updateImage();
+                else window.setTimeout(updateImage, 140);
             });
         });
     });
 
-    /* ── PORTFOLIO DETAIL MODAL ────────────── */
-    const projectsData = {
-        stroma: {
-            title: "STROMA Suite &middot; Control Predictivo IA",
-            subtitle: "Tecnología & IA &middot; SSOMA &middot; Consultoría",
-            img: "stroma_suite.png",
-            problem: "Dificultad para anticipar actos inseguros, fatiga extrema o condiciones de riesgo en campo (minería y construcción) en tiempo real, lo que derivaba en incidentes graves.",
-            solution: "Plataforma de IoT y visión computacional que recolecta datos de cámaras inteligentes de fatiga (DSM), telemetría corporal en EPPs y genera reportes automáticos de control operacional predictivo y planes de acción preventivos.",
-            impact: "Simulación de reducción de incidentes graves en un 80%, control continuo de fatiga y cumplimiento automatizado de la Ley N° 29783.",
-            tech: ["Python", "Flask", "OpenCV", "TensorFlow", "IoT Telemetry", "Tailwind CSS", "Bootstrap", "Google Fonts"]
-        },
-        checklist: {
-            title: "Auditor SSOMA & Checklist Interactivo",
-            subtitle: "SSOMA & Consultoría &middot; Analítica & BI",
-            img: "stroma_landing.png",
-            problem: "Las inspecciones de seguridad en campo suelen ser en papel, lentas de consolidar, propensas a pérdida de información y con retrasos de semanas en la homologación de subcontratistas.",
-            solution: "Aplicación web ligera para auditoría interactiva de 23 estándares críticos de SST, que compila los hallazgos en caliente, asigna responsables, y genera un plan de acción inmediato descargable en PDF.",
-            impact: "Reducción del 30% en tiempos de homologación de proveedores y 100% de trazabilidad de inspecciones técnico-legales.",
-            tech: ["HTML5", "CSS Grid", "JS Vanilla", "jspdf", "Local Storage", "Font Awesome"]
-        },
-        nifi: {
-            title: "Pipeline de Ingesta Telecom IPT",
-            subtitle: "Tecnología & IA &middot; Analítica & BI",
-            img: "inoc_suite.png",
-            problem: "Ingesta manual de miles de incidentes y alarmas de red diarias desde múltiples APIs del operador Atento/IPT, resultando en reportes fuera de tiempo y carga laboral excesiva.",
-            solution: "Pipeline automatizado en Apache NiFi que extrae datos de red en tiempo real, los almacena en Google Cloud Platform y ejecuta scripts Python para limpiar e integrar información directamente en bases de datos SQL.",
-            impact: "Ahorro de 40 horas semanales de carga operativa para la gerencia, eliminando el 100% de errores manuales de reportería.",
-            tech: ["Python", "Apache NiFi", "Google Cloud Platform", "Pandas", "SQL Server", "Cron Jobs"]
-        },
-        powerbi: {
-            title: "Dashboard Ejecutivo de Sostenibilidad",
-            subtitle: "Analítica & BI &middot; Cumplimiento Ambiental",
-            img: "sustainability_dashboard.png",
-            problem: "La dirección general carecía de visibilidad agregada sobre los indicadores clave de sostenibilidad, Uptime de infraestructura crítica y conformidad reglamentaria de residuos sólidos.",
-            solution: "Cuadro de mando estratégico desarrollado en Power BI Avanzado, integrado mediante SQL a las bases de datos de operaciones, registros SSOMA e indicadores corporativos.",
-            impact: "Uptime sostenido de 99.9%, monitoreo inmediato de KPIs ambientales de residuos y control activo de cero accidentes.",
-            tech: ["Power BI", "DAX", "MS SQL Server", "ETL Pipelines", "Data Analytics", "Power Query"]
-        }
-    };
+    /* ── Copiar correo y exportar ────────────────────────────────────── */
+    const copyButton = document.getElementById("copy-email");
+    const copyStatus = document.getElementById("copy-status");
 
-    const modal        = document.getElementById("portfolio-modal");
-    const modalImg     = document.getElementById("modal-img-container");
-    const modalTitle   = document.getElementById("modal-title");
-    const modalSub     = document.getElementById("modal-subtitle");
-    const modalProb    = document.getElementById("modal-problem");
-    const modalSol     = document.getElementById("modal-solution");
-    const modalImpact  = document.getElementById("modal-impact");
-    const modalTech    = document.getElementById("modal-tech");
-    const modalClose   = modal ? modal.querySelector(".modal-close") : null;
-    const modalBack    = modal ? modal.querySelector(".modal-backdrop") : null;
-
-    function openModal(projectKey) {
-        const data = projectsData[projectKey];
-        if (!data || !modal) return;
-
-        // Image or Placeholder
-        if (data.img) {
-            modalImg.innerHTML = `<img src="${data.img}" alt="${data.title}">`;
-        } else {
-            modalImg.innerHTML = `
-                <div class="portfolio-card-placeholder ${data.placeholderClass || ''}">
-                    <i class="${data.placeholderIcon || 'fa-solid fa-folder-open'}"></i>
-                </div>
-            `;
-        }
-
-        // Text content
-        modalTitle.innerHTML = data.title;
-        modalSub.textContent = data.subtitle;
-        modalProb.textContent = data.problem;
-        modalSol.textContent = data.solution;
-        modalImpact.textContent = data.impact;
-
-        // Tech tags
-        modalTech.innerHTML = "";
-        data.tech.forEach(tech => {
-            const span = document.createElement("span");
-            span.className = "tag tag--tech";
-            span.textContent = tech;
-            modalTech.appendChild(span);
-        });
-
-        modal.classList.add("active");
-        modal.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
+    function fallbackCopy(text) {
+        const field = document.createElement("textarea");
+        field.value = text;
+        field.setAttribute("readonly", "");
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.appendChild(field);
+        field.select();
+        const success = document.execCommand("copy");
+        field.remove();
+        return success;
     }
 
-    function closeModal() {
-        if (!modal) return;
-        modal.classList.remove("active");
-        modal.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
+    if (copyButton) {
+        copyButton.addEventListener("click", async function () {
+            const email = copyButton.dataset.email;
+            let copied = false;
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(email);
+                    copied = true;
+                } else copied = fallbackCopy(email);
+            } catch (_) {
+                copied = fallbackCopy(email);
+            }
+            if (copyStatus) copyStatus.textContent = copied ? "Correo copiado: " + email : "Correo: " + email;
+            window.setTimeout(function () { if (copyStatus) copyStatus.textContent = ""; }, 3500);
+        });
     }
 
-    // Attach click events to portfolio buttons
-    document.querySelectorAll(".portfolio-card-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const projectKey = btn.dataset.project;
-            openModal(projectKey);
-        });
+    const printButton = document.getElementById("print-pdf");
+    let originalTitle = document.title;
+    if (printButton) printButton.addEventListener("click", function () { window.print(); });
+    window.addEventListener("beforeprint", function () {
+        originalTitle = document.title;
+        document.title = "CV_Flavio_Bravo_Perfil_Integral";
     });
+    window.addEventListener("afterprint", function () { document.title = originalTitle; });
 
-    if (modalClose) modalClose.addEventListener("click", closeModal);
-    if (modalBack) modalBack.addEventListener("click", closeModal);
+    /* ── Fecha y cambios de preferencias ─────────────────────────────── */
+    const currentYear = document.getElementById("current-year");
+    if (currentYear) currentYear.textContent = String(new Date().getFullYear());
 
-    // Close on Escape key
-    window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal && modal.classList.contains("active")) {
-            closeModal();
+    reducedMotion.addEventListener("change", function () {
+        if (reducedMotion.matches) {
+            body.classList.remove("motion-ready");
+            revealItems.forEach(function (item) { item.classList.add("revealed"); });
+            parallaxItems.forEach(function (item) { item.style.setProperty("--parallax-y", "0px"); });
         }
     });
-
-    /* ── SVG CIRCLE PROGRESS ANIMATION ──────── */
-    const circles = document.querySelectorAll(".circle-progress");
-    const statsSection = document.getElementById("stats");
-
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-            if (!e.isIntersecting) return;
-            statsObserver.unobserve(e.target);
-
-            // Animate progress circles
-            circles.forEach(circle => {
-                const targetVal = +circle.dataset.value;
-                const radius = circle.r.baseVal.value;
-                const circumference = 2 * Math.PI * radius; // ~251.2
-                
-                // Animate dashoffset
-                const offset = circumference - (circumference * targetVal) / 100;
-                circle.style.strokeDashoffset = offset;
-            });
-        });
-    }, { threshold: 0.2 });
-
-    if (statsSection) statsObserver.observe(statsSection);
-})();
+}());
