@@ -33,6 +33,8 @@ Para cada vacante se recomienda adjuntar, además del enlace web, un CV Word/PDF
 
 ## Exportar a PDF ATS
 
+La exportación utiliza una composición impresa propia de **dos páginas A4**, independiente de la landing. La primera página prioriza perfil, resultados y experiencia; la segunda organiza formación, competencias y proyectos. No imprime navegación, fotografía, animaciones ni elementos decorativos de la web.
+
 1. Abre `index.html` en Chrome, Edge o Firefox.
 2. Pulsa **“Guardar CV en PDF”**.
 3. En la ventana de impresión elige:
@@ -40,9 +42,9 @@ Para cada vacante se recomienda adjuntar, además del enlace web, un CV Word/PDF
    - Papel: **A4**.
    - Escala: **Predeterminada / 100%**.
    - Encabezados y pies de página: **desactivados**.
-   - Gráficos de fondo: pueden permanecer desactivados; la versión impresa no los necesita.
+   - Gráficos de fondo: **activados** para conservar los acentos corporativos.
 
-La hoja de estilos de impresión elimina la foto, controles, animaciones y elementos decorativos. Mantiene una sola columna de lectura para experiencia y competencias.
+El texto conserva un orden lógico de extracción para sistemas ATS y sigue siendo legible si se imprime en escala de grises.
 
 ## Archivos principales
 
